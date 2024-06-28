@@ -41,19 +41,20 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/ITMO/ETS/web-client",
+    "last_opened_file_path": "E:/ITMO/ETS/Notification",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\apps\\WebStorm\\ch-0\\231.9011.35\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\ITMO\ETS\web-client" />
       <recent name="E:\ITMO\ETS\Notification" />
+      <recent name="E:\ITMO\ETS\web-client" />
       <recent name="E:\ITMO\ETS\api" />
       <recent name="E:\ITMO\ETS" />
     </key>
@@ -67,6 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1719575380774</updated>
       <workItem from="1719575381946" duration="1550000" />
+      <workItem from="1719577061007" duration="1572000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1719576664502</created>
@@ -75,7 +77,21 @@
       <option name="project" value="LOCAL" />
       <updated>1719576664502</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="init">
+      <created>1719578405564</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1719578405564</updated>
+    </task>
+    <task id="LOCAL-00003" summary="init">
+      <created>1719578556651</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1719578556651</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
