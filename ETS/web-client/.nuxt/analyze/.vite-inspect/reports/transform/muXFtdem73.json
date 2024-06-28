@@ -1,0 +1,214 @@
+{
+  "resolvedId": "E:/Stusy/web-client/components/TheNavigation.vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\n\r\nimport {handleMenu, handleMobile, useMenu, useMobile} from \"~/composables/mobile\";\r\n\r\nconst runtimeConfig = useRuntimeConfig()\r\nconst router = useRouter();\r\nconst token = useCookie('token')\r\n\r\nconst mobile = useMobile()\r\nconst menuActive = useMenu()\r\nconst windowWidth = ref(0)\r\n\r\nfunction checkScreen() {\r\n  windowWidth.value = window.innerWidth;\r\n  if (windowWidth.value <= 920) {\r\n    handleMobile(true);\r\n    return;\r\n  }\r\n  handleMobile(false);\r\n  menuActive.value = false;\r\n  return;\r\n}\r\n\r\nonMounted(() => {\r\n  window.addEventListener('resize', checkScreen);\r\n  checkScreen()\r\n})\r\n\r\n</script>\r\n\r\n<template>\r\n  <aside :class=\"mobile ? 'menu-horizontal' : 'menu-vertical'\">\r\n    <TheNavbar v-show=\"!mobile\"></TheNavbar>\r\n    <div class=\"header-aside\" v-show=\"mobile\">\r\n      <NuxtLink to=\"/home\" style=\"display: flex; justify-content: center; align-items: center\">\r\n        <img src=\"@/assets/imgs/logo.svg\" alt=\"logo\" style=\"width: 40px\"/>\r\n      </NuxtLink>\r\n      <div class=\"icon-menu\" @click=\"handleMenu()\" :class=\"{'icon-active':menuActive}\"></div>\r\n    </div>\r\n    <transition name=\"mobile-nav\">\r\n      <div v-show=\"menuActive\" class=\"full-screen\" @click.stop=\"handleMenu(false)\">\r\n        <nav class=\"navigation-dropdown\" @click.stop>\r\n          <TheNavbar></TheNavbar>\r\n        </nav>\r\n      </div>\r\n    </transition>\r\n  </aside>\r\n</template>\r\n<style scoped lang=\"scss\">\r\n@use '@/assets/scss/main.scss' as *;\r\n\r\n.menu-vertical {\r\n  display: flex;\r\n  position: sticky;\r\n  height: 100vh;\r\n  width: max-content;\r\n  padding: 10px 10px 40px 10px;\r\n  z-index: 1;\r\n  top: 0;\r\n  left: 0;\r\n  @include theme('background', $general-background-light);\r\n  @include theme('box-shadow', $shadow-color, true, 2px 0px 8px 0px);\r\n  transition: all .3s ease;\r\n\r\n  .navigation {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: start;\r\n  }\r\n}\r\n\r\n.menu-horizontal {\r\n  display: flex;\r\n  position: sticky;\r\n  width: 100vw;\r\n  padding: 10px 10px 15px 10px;\r\n  z-index: 1;\r\n  top: 0;\r\n  left: 0;\r\n  @include theme('box-shadow', $shadow-color, true, 0px 2px 8px 0px);\r\n  @include theme('background', $general-background-light);\r\n  transition: all .3s ease;\r\n\r\n  .navigation {\r\n    display: flex;\r\n    height: 100%;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n    width: 100%;\r\n  }\r\n}\r\n\r\n.navigation-dropdown {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\r\n  gap: 10px;\r\n  position: absolute;\r\n  height: 100vh;\r\n  width: max-content;\r\n  padding: 10px 10px 40px 10px;\r\n  border-radius: 0 10px;\r\n  z-index: 99;\r\n  top: 0;\r\n  left: 0;\r\n  @include theme('box-shadow', $shadow-color, true, 2px 0px 8px 0px);\r\n  @include theme('background', $general-background-light);\r\n}\r\n\r\n.navigation-main, .navigation-other {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: stretch;\r\n}\r\n\r\n.icon-active {\r\n  transform: rotate(360deg);\r\n}\r\n\r\n.icon-menu {\r\n  cursor: pointer;\r\n  transition: .3s ease all;\r\n}\r\n\r\n.full-screen {\r\n  height: 100vh;\r\n  width: 100vw;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  z-index: 98;\r\n}\r\n\r\n.header-aside {\r\n  width: 100%;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  gap: 20px;\r\n}\r\n\r\n@media only screen and (min-width: 1921px) {\r\n  .menu-vertical {\r\n    height: min-content;\r\n    border-radius: 20px;\r\n    padding: 10px;\r\n  }\r\n\r\n  .navigation {\r\n    gap: 50px;\r\n  }\r\n}\r\n\r\n.mobile-nav-enter-active,\r\n.mobile-nav-leave-active {\r\n  transition-property: opacity, transform;\r\n  transition-duration: .3s;\r\n}\r\n\r\n.mobile-nav-enter-from,\r\n.mobile-nav-leave-to {\r\n  opacity: 0;\r\n  transform: translateX(-100%);\r\n}\r\n\r\n</style>",
+      "start": 1715794737088,
+      "end": 1715794737488,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794737488,
+      "end": 1715794737488,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794737488,
+      "end": 1715794737488,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794737488,
+      "end": 1715794737488,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794737488,
+      "end": 1715794737488,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794737488,
+      "end": 1715794737488,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794737488,
+      "end": 1715794737488,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794737488,
+      "end": 1715794737488,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/components/TheNavigation.vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/components/TheNavigation.vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/components/TheNavigation.vue?vue&type=style&index=0&scoped=72d03926&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-72d03926\"]]);\n",
+      "start": 1715794737488,
+      "end": 1715794737995,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794737995,
+      "end": 1715794737995,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794737995,
+      "end": 1715794737995,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794737996,
+      "end": 1715794737996,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794737996,
+      "end": 1715794737996,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794738001,
+      "end": 1715794738001,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794738002,
+      "end": 1715794738002,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794738002,
+      "end": 1715794738002,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794738002,
+      "end": 1715794738002,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794738002,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794738003,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794738003,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794738003,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794738004,
+      "end": 1715794738006,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794738006,
+      "end": 1715794738007,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794738007,
+      "end": 1715794738007,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794738007,
+      "end": 1715794738007,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794738008,
+      "end": 1715794738008,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794738008,
+      "end": 1715794738008,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794738008,
+      "end": 1715794738008,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794738008,
+      "end": 1715794738009,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794738009,
+      "end": 1715794738009,
+      "order": "normal"
+    }
+  ]
+}

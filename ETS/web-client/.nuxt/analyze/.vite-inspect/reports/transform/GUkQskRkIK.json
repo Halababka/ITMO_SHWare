@@ -1,0 +1,214 @@
+{
+  "resolvedId": "E:/Stusy/web-client/pages/profile.vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\nimport AwModal from \"~/components/ui-kit/AwModal.vue\";\r\nimport AwButton from \"~/components/ui-kit/AwButton.vue\";\r\nimport {useUser} from \"~/composables/user\";\r\n\r\ndefinePageMeta({layout: 'home'})\r\n\r\nuseHead({\r\n  title: 'Профиль'\r\n})\r\nconst user = (await useUser()).value\r\nconst router = useRouter();\r\nconst nuxtApp = useNuxtApp()\r\nconst token = useCookie('token')\r\nconst userData = ref({\r\n  first_name: \"\"\r\n})\r\n\r\nwatchEffect(() => {\r\n  if (!user.pending) {\r\n    userData.value.first_name = user.userData.first_name\r\n  }\r\n})\r\n\r\n\r\nconst actualImageProfile = {\r\n  state: ref('boy1.png'),\r\n  bufer: ref(''),\r\n  setImage: (name) => {\r\n    actualImageProfile.bufer.value = name\r\n  },\r\n  saveImage: () => {\r\n    if (actualImageProfile.bufer.value == '') {\r\n      return\r\n    }\r\n    actualImageProfile.state.value = actualImageProfile.bufer.value\r\n    actualImageProfile.bufer.value = ''\r\n  }\r\n}\r\n\r\nlet images = [\r\n  {id: 1, name: \"boy1.png\"},\r\n  {id: 2, name: \"boy2.png\"},\r\n  {id: 3, name: \"girl1.png\"},\r\n  {id: 4, name: \"girl2.png\"},\r\n]\r\n\r\nconst modalActive = ref(false)\r\nconst modalChangePwd = ref(false)\r\n\r\nlet errorShow = ref(false)\r\nlet errorText = ref('')\r\n\r\nconst runtimeConfig = useRuntimeConfig()\r\n\r\nlet localUserData = ref({\r\n  \"first_name\": '',\r\n  \"last_name\": '',\r\n  \"group_name\": '',\r\n  \"oldPwd\": '',\r\n  \"newPwd\": '',\r\n  \"profile_photo\": ''\r\n})\r\n\r\nlet fileName;\r\n\r\nfunction changePwd() {\r\n  fetch(`${runtimeConfig.public.apiBase}/users/${localStorage.getItem('id')}/password`, {\r\n    method: 'PUT',\r\n    headers: {\r\n      'Authorization': token.value\r\n    },\r\n    body: JSON.stringify({\r\n      \"old_password\": localUserData.value.oldPwd,\r\n      \"new_password\": localUserData.value.newPwd\r\n    })\r\n  }).then((response) => {\r\n    switch (response.status) {\r\n      case 401:\r\n        localStorage.clear()\r\n        router.push({path: \"/home\"});\r\n        break;\r\n      case 200:\r\n        errorShow.value = false;\r\n        localUserData.value.oldPwd = ''\r\n        localUserData.value.newPwd = ''\r\n        return;\r\n    }\r\n    return response.json();\r\n  }).then((data) => {\r\n    if (data) {\r\n      switch (data.error) {\r\n        case \"old password mysteriously missing\":\r\n          errorShow.value = true;\r\n          errorText.value = \"Не введен старый пароль\";\r\n          break;\r\n        case \"new password too short\":\r\n          errorShow.value = true;\r\n          errorText.value = \"Новый пароль короткий\";\r\n          break;\r\n        case \"old password not match\":\r\n          errorShow.value = true;\r\n          errorText.value = \"Неверный старый пароль\";\r\n          break;\r\n      }\r\n    }\r\n  }).catch((err) => {\r\n    console.error(\"Невозможно отправить запрос\", err);\r\n  });\r\n}\r\n\r\nfunction submit() {\r\n  if (fileName === undefined) {\r\n    fileName = localUserData.value.profile_photo\r\n  }\r\n  fetch(`${runtimeConfig.public.apiBase}/users/${localStorage.getItem('id')}`, {\r\n    method: 'PUT',\r\n    headers: {\r\n      'Authorization': token.value\r\n    },\r\n    body: JSON.stringify({\r\n      \"first_name\": localUserData.value.first_name,\r\n      \"last_name\": JSON.stringify({\r\n        lastName: localUserData.value.last_name,\r\n        profilePhoto: fileName\r\n      })\r\n    })\r\n  }).then((response) => {\r\n    switch (response.status) {\r\n      case 401:\r\n        localStorage.removeItem('token')\r\n        router.push({path: \"/home\"});\r\n        break;\r\n    }\r\n    return response.json();\r\n  }).then((data) => {\r\n    errorShow.value = false\r\n    refresh()\r\n  }).catch((err) => {\r\n    console.error(\"Невозможно отправить запрос\", err);\r\n  });\r\n}\r\n\r\n// const {userData, pending, error, refresh} = nuxtApp.$user\r\n// watchEffect(() => {\r\n//   if (!pending.value) {\r\n//     localUserData.value.first_name = userData.value.first_name;\r\n//     localUserData.value.last_name = JSON.parse(userData.value.last_name).lastName;\r\n//     localUserData.value.group_name = userData.value.group.name;\r\n//     localUserData.value.profile_photo = JSON.parse(userData.value.last_name).profilePhoto;\r\n//   }\r\n// })\r\n\r\n// localUserData.value.first_name = user.value\r\n// console.log(\"local\", localUserData.value.first_name)\r\n\r\nfunction loadPhoto() {\r\n  const input = document.querySelector('input[type=\"file\"]')\r\n  let data = new FormData()\r\n  data.append('uploadedfile', input.files[0])\r\n  fetch(`${runtimeConfig.public.apiBase}/uploads`, {\r\n    method: 'POST',\r\n    headers: {\r\n      'Authorization': token.value,\r\n    },\r\n    body: data\r\n  }).then((response) => {\r\n    switch (response.status) {\r\n      case 200:\r\n        alert('Файл загружен успешно')\r\n        break;\r\n      case 500:\r\n        alert('Файл не выбран')\r\n        break;\r\n    }\r\n    return response.json();\r\n  }).then((data) => {\r\n    fileName = data.url;\r\n    localUserData.value.profile_photo = fileName;\r\n    // refresh()\r\n  }).catch((err) => {\r\n    console.error(\"Невозможно отправить запрос\", err);\r\n  });\r\n}\r\n</script>\r\n\r\n<template>\r\n  <div class=\"main-content\">\r\n    <div class=\"personalData\">\r\n      <div class=\"photoName\">\r\n        <div class=\"photo\">\r\n          <img\r\n              :src=\"[localUserData.profile_photo?`${runtimeConfig.public.domainName + localUserData.profile_photo}`:'assets/imgs/no_course_photo.png']\"\r\n              @click=\"modalActive =! modalActive\"\r\n              alt=\"Фото профиля\" draggable=\"false\">\r\n        </div>\r\n      </div>\r\n      <form v-on:submit.prevent=\"submit()\" class=\"form\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-form\">\r\n            <label for=\"file\">Имя</label>\r\n            <input type=\"file\" name=\"file\" id=\"file\" @change=\"loadPhoto()\">\r\n          </div>\r\n          <div class=\"input-form\">\r\n            <label for=\"first_name\">Имя</label>\r\n            <input\r\n                id=\"first_name\"\r\n                v-model=\"userData.first_name\"\r\n                type=\"text\"\r\n                placeholder=\"Введите имя\"\r\n                required\r\n            />\r\n          </div>\r\n          <div class=\"input-form\">\r\n            <label for=\"last_name\">Фамилия</label>\r\n            <input\r\n                id=\"last_name\"\r\n                v-model=\"localUserData.last_name\"\r\n                type=\"text\"\r\n                placeholder=\"Введите фамилию\"\r\n                required\r\n            />\r\n          </div>\r\n          <a class=\"link\" @click=\"modalChangePwd =! modalChangePwd\">Сменить пароль</a>\r\n        </div>\r\n        <AwButton>Сохранить</AwButton>\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n  <AwModal @close=\"modalActive =! modalActive\" :modalActive=\"modalActive\" :title=\"'Изображения профиля'\">\r\n    <div class=\"modal-content\">\r\n      <input type=\"file\" name=\"file\" @change=\"loadPhoto()\">\r\n      <AwButton @click=\"actualImageProfile.saveImage\">Сохранить</AwButton>\r\n    </div>\r\n  </AwModal>\r\n  <AwModal @close=\"modalChangePwd =! modalChangePwd\" :modalActive=\"modalChangePwd\" :title=\"'Смена пароля'\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"change-pwd\">\r\n        <div\r\n            class=\"error-block\"\r\n            v-bind:style=\"[errorShow ? { opacity: 1, padding: '16px'} : { opacity: 0 }]\">\r\n          <span>{{ errorText }}</span>\r\n        </div>\r\n        <div class=\"input-group\">\r\n          <div class=\"input-form\">\r\n            <label for=\"last_name\">Старый пароль</label>\r\n            <input\r\n                id=\"password\"\r\n                v-model=\"localUserData.oldPwd\"\r\n                type=\"text\"\r\n                placeholder=\"Введите старый пароль\"\r\n            />\r\n          </div>\r\n          <div class=\"input-form\">\r\n            <label for=\"last_name\">Новый пароль</label>\r\n            <input\r\n                id=\"password\"\r\n                v-model=\"localUserData.newPwd\"\r\n                type=\"text\"\r\n                placeholder=\"Введите новый пароль\"\r\n            />\r\n            <AwButton @click=\"changePwd\">Сменить пароль</AwButton>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </AwModal>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n@use '@/assets/scss/main.scss' as *;\r\n\r\n.photoName {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 25px;\r\n  align-items: center;\r\n}\r\n\r\n.photo img {\r\n  width: auto;\r\n  height: 100px;\r\n  max-height: 150px;\r\n  border-radius: 15px;\r\n  user-select: none;\r\n  cursor: pointer;\r\n  transition: .05s;\r\n}\r\n\r\n.photo img:hover {\r\n  border: 2px solid $blue;\r\n}\r\n\r\ninput:disabled,\r\ninput[disabled] {\r\n  background: #000 !important;\r\n}\r\n\r\n.name {\r\n  margin-bottom: 10px;\r\n  font-size: 17px;\r\n  font-weight: bold;\r\n}\r\n\r\n.input-form label span {\r\n  font-size: 18px;\r\n}\r\n\r\n.modal-content {\r\n  display: flex;\r\n  flex-direction: column;\r\n\r\n  & p {\r\n    margin-bottom: 16px;\r\n  }\r\n\r\n  & button {\r\n    margin: 20px auto 0;\r\n  }\r\n}\r\n\r\n.change-pwd {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  justify-content: center;\r\n  gap: 10px;\r\n}\r\n\r\n.img-collection {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n  max-width: calc(9rem * 3);\r\n\r\n\r\n  & img {\r\n    width: 9rem;\r\n    height: 9rem;\r\n    margin: 5px;\r\n    cursor: pointer;\r\n    border-radius: 15px;\r\n    flex: 0 0 22.222222%;\r\n  }\r\n\r\n  & a:active {\r\n    border: 2px solid $blue;\r\n  }\r\n}\r\n\r\n</style>\r\n",
+      "start": 1715794731239,
+      "end": 1715794731309,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794731309,
+      "end": 1715794731309,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794731309,
+      "end": 1715794731309,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794731309,
+      "end": 1715794731309,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794731309,
+      "end": 1715794731309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794731309,
+      "end": 1715794731309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794731309,
+      "end": 1715794731309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794731309,
+      "end": 1715794731309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/pages/profile.vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/pages/profile.vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/pages/profile.vue?vue&type=style&index=0&scoped=7128851b&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-7128851b\"]]);\n",
+      "start": 1715794731309,
+      "end": 1715794731464,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794731465,
+      "end": 1715794731465,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731473,
+      "end": 1715794731473,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794731476,
+      "end": 1715794731476,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731476,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794731478,
+      "end": 1715794731478,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794731480,
+      "end": 1715794731480,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794731481,
+      "end": 1715794731482,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794731482,
+      "end": 1715794731482,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794731484,
+      "end": 1715794731491,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794731492,
+      "end": 1715794731492,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794731497,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794731498,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794731499,
+      "end": 1715794731499,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794731500,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794731501,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794731501,
+      "end": 1715794731503,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794731503,
+      "end": 1715794731503,
+      "order": "normal"
+    }
+  ]
+}

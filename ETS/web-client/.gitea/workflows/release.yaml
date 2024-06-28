@@ -1,0 +1,32 @@
+name: Nuxt.js CI
+on: [ push ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm ci
+      - run: npm run build
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: deploying
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: |
+            cd projects/lms-ui
+            git pull
+            docker build -t stusy-lms-ui .
+            docker stop stusy-lms-ui
+            docker run --name stusy-lms-ui --rm --detach -p 23000:3000 stusy-lms-ui
+            

@@ -1,0 +1,214 @@
+{
+  "resolvedId": "E:/Stusy/web-client/components/TheNavbar.vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\nimport {useUser} from \"~/composables/user\";\r\nimport {useMobile} from \"~/composables/mobile\";\r\nimport Profile from \"~/pages/profile.vue\";\r\nimport {markNotificationsAsRead} from \"~/helpers/notification\";\r\n\r\ninterface MenuItem {\r\n  id: number;\r\n  name: string;\r\n  permission: string;\r\n  title: string;\r\n  link: string;\r\n  icon: string;\r\n}\r\n\r\nconst user = (await useUser()).value\r\nconst menuItems = ref<MenuItem[]>([])\r\nconst mobile = useMobile()\r\nconst menuIsOpen = ref(false)\r\nconst notificationPanel = ref();\r\nconst notifications = (await useNotification()).value\r\nconst unreadNotificationsCount = computed(() => {\r\n  if (notifications.pending) return 0;\r\n  return notifications.notificationData.data.filter(notification => !notification.is_read).length;\r\n});\r\n\r\nwatchEffect(() => {\r\n  if (!user.pending) {\r\n    const allowedPermissions = user.userData.permissions.map((permission: any) => permission.code)\r\n\r\n    const menuItemsFromPermissions: MenuItem[] = [\r\n      {\r\n        id: 1,\r\n        name: 'Read Courses',\r\n        permission: 'READ_COURSES',\r\n        title: 'Курсы',\r\n        link: '/course',\r\n        icon: 'book'\r\n      },\r\n      {\r\n        id: 2,\r\n        name: 'Create Courses',\r\n        permission: 'CREATE_COURSES',\r\n        title: 'Создать курс',\r\n        link: '/course/create',\r\n        icon: 'book_add'\r\n      },\r\n      {\r\n        id: 3,\r\n        name: 'Update Courses',\r\n        permission: 'UPDATE_COURSES',\r\n        title: 'Управление курсами',\r\n        link: '/controlCourse',\r\n        icon: 'book_change'\r\n      },\r\n      {\r\n        id: 4,\r\n        name: 'Admin Panel',\r\n        permission: 'CRUD_USERS' || 'CRUD_ROLES' || 'CRUD_GROUPS',\r\n        title: 'Администрирование',\r\n        link: '/admin',\r\n        icon: 'admin_panel'\r\n      }\r\n    ]\r\n\r\n    // Фильтрация элементов меню на основе разрешений\r\n    menuItems.value = menuItemsFromPermissions.filter(item => allowedPermissions.includes(item.permission))\r\n  }\r\n})\r\nconst allowedMenuItems = computed(() => menuItems.value)\r\n\r\nconst toggleNotificationPanel = (event) => {\r\n  notificationPanel.value.toggle(event);\r\n}\r\n\r\nconst hideNotificationPanel = () => {\r\n  notificationPanel.value.hide();\r\n  const unreadNotificationsIds = notifications.notificationData.data\r\n      .filter(notification => !notification.is_read)\r\n      .map(notification => notification.id);\r\n  if (unreadNotificationsIds.length > 0) {\r\n    markNotificationsAsRead(unreadNotificationsIds);\r\n  }\r\n}\r\n</script>\r\n\r\n<template>\r\n  <nav class=\"navigation\">\r\n    <header>\r\n      <NuxtLink to=\"/home\" style=\" display: flex; gap: 10px; align-content: center;\"\r\n                @click=\"mobile && handleMenu(false)\">\r\n        <img src=\"@/assets/imgs/logo.svg\" alt=\"logo\" style=\"user-select: none; z-index: 1\" class=\"logo-img\"/>\r\n        <transition name=\"slide\">\r\n          <div class=\"header-logo-text\" v-show=\"menuIsOpen\">\r\n            <span class=\"name\">EduTech</span>\r\n            <span class=\"profession\">Solution</span>\r\n          </div>\r\n        </transition>\r\n      </NuxtLink>\r\n      <div class=\"menu-open\" :style=\"menuIsOpen ? 'transform: rotate(-270deg)' : ''\"\r\n           @click=\"menuIsOpen = !menuIsOpen\">\r\n        <!--        <img src=\"@/assets/imgs/arrow.svg\">-->\r\n        <div class=\"icon-arrow\"></div>\r\n      </div>\r\n    </header>\r\n    <ul class=\"navigation-main\">\r\n      <li class=\"nav-link\" @click=\"\">\r\n        <NuxtLink to=\"/home\" @click=\"mobile && handleMenu(false)\">\r\n          <div class=\"icon-home\"></div>\r\n          <transition name=\"slide\">\r\n            <span class=\"text-nav\" v-show=\"menuIsOpen\">Главная</span>\r\n          </transition>\r\n        </NuxtLink>\r\n      </li>\r\n      <li v-for=\"elem in allowedMenuItems\" :key=\"elem.id\" class=\"nav-link\">\r\n        <NuxtLink :to=\"elem.link\" @click=\"mobile && handleMenu(false)\">\r\n          <div :class=\"`icon-${elem.icon}`\"></div>\r\n          <transition name=\"slide\">\r\n            <span class=\"text-nav\" v-show=\"menuIsOpen\">{{ elem.title }}</span>\r\n          </transition>\r\n        </NuxtLink>\r\n      </li>\r\n    </ul>\r\n    <ul class=\"navigation-other\">\r\n      <li class=\"nav-link\">\r\n        <NuxtLink to=\"/profile\" @click=\"mobile && handleMenu(false)\">\r\n          <div class=\"icon-profile\"></div>\r\n          <transition name=\"slide\">\r\n            <span class=\"text-nav\" v-show=\"menuIsOpen\">Профиль</span>\r\n          </transition>\r\n        </NuxtLink>\r\n      </li>\r\n      <li class=\"nav-link flex justify-center\" @click=\"toggleNotificationPanel\">\r\n        <NuxtLink @click=\"mobile && handleMenu(false)\">\r\n<!--          <i v-badge=\"unreadNotificationsCount\" class=\"pi pi-bell\" style=\"font-size: 1.55rem\"/>-->\r\n          <div class=\"relative\">\r\n            <i class=\"pi pi-bell\" style=\"font-size: 1.55rem\"/>\r\n            <Badge :value=\"unreadNotificationsCount\" v-if=\"unreadNotificationsCount > 0\" class=\"badge\"></Badge>\r\n          </div>\r\n          <transition name=\"slide\">\r\n            <span class=\"text-nav\" v-show=\"menuIsOpen\">Уведомления</span>\r\n          </transition>\r\n        </NuxtLink>\r\n      </li>\r\n      <li class=\"nav-link\" @click=\"logout()\">\r\n        <NuxtLink @click=\"mobile && handleMenu(false)\">\r\n          <div class=\"icon-logout\"></div>\r\n          <transition name=\"slide\">\r\n            <span class=\"text-nav\" v-show=\"menuIsOpen\">Выйти</span>\r\n          </transition>\r\n        </NuxtLink>\r\n      </li>\r\n    </ul>\r\n    <OverlayPanel ref=\"notificationPanel\" class=\"min-w-72\" @hide=\"hideNotificationPanel\">\r\n      <div class=\"flex flex-col gap-3 w-25rem\">\r\n        <div class=\"flex justify-between items-center align-center\">\r\n          <span class=\"font-medium text-900 block\">Уведомления</span>\r\n          <NuxtLink to=\"/notifications\" class=\"text-blue-500\">Все</NuxtLink>\r\n        </div>\r\n        <div v-if=\"notifications.notificationData.data.length > 0\">\r\n          <ul class=\"notifications-list\">\r\n            <li v-for=\"(notification, index) in notifications.notificationData.data.slice(0, 10)\" :key=\"notification.id\"\r\n                :class=\"{ 'unread': !notification.is_read }\">\r\n              <div class=\"flex justify-between items-center align-center\">\r\n                <div class=\"notification-content\">{{ notification.message }}</div>\r\n                <div class=\"notification-dot\" v-if=\"!notification.is_read\"></div>\r\n              </div>\r\n            </li>\r\n          </ul>\r\n        </div>\r\n        <div v-else>\r\n          Нет уведомлений\r\n        </div>\r\n      </div>\r\n    </OverlayPanel>\r\n  </nav>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n@use '@/assets/scss/main.scss' as *;\r\n\r\nul {\r\n  list-style-type: none;\r\n}\r\n\r\n.slide-enter-active,\r\n.slide-leave-active {\r\n  transition-property: all;\r\n  transition-duration: .1s;\r\n  transition-timing-function: ease-out;\r\n}\r\n\r\n.slide-enter-from,\r\n.slide-leave-to {\r\n  opacity: 0;\r\n  transform: translateX(-50%);\r\n}\r\n\r\n.navigation {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  gap: 20px;\r\n  transition: all .3s ease;\r\n}\r\n\r\n.navigation-dropdown {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\r\n  gap: 10px;\r\n  position: absolute;\r\n  height: 100vh;\r\n  width: max-content;\r\n  padding: 10px 10px 40px 10px;\r\n  border-radius: 0 10px;\r\n  z-index: 99;\r\n  top: 0;\r\n  left: 0;\r\n  @include theme('box-shadow', $shadow-color, true, 2px 0px 8px 0px);\r\n  @include theme('background', $general-background-light);\r\n}\r\n\r\n.logo-img {\r\n  height: 50px;\r\n}\r\n\r\n.navigation-main, .navigation-other {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: stretch;\r\n  width: max-content;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.navigation-other {\r\n  margin-top: auto;\r\n}\r\n\r\n.nav-link {\r\n  text-align: center;\r\n  list-style-type: none;\r\n  border-radius: 5px;\r\n  width: 100%;\r\n  transition: all 0.3s ease;\r\n\r\n  a {\r\n    padding: 5px;\r\n    display: flex;\r\n    gap: 10px;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n    @include theme('color', $primary-text-color);\r\n  }\r\n\r\n  & i {\r\n    margin: 5px;\r\n  }\r\n\r\n  &:hover {\r\n    @include theme('background-color', $primary-color);\r\n\r\n    & i {\r\n      color: white;\r\n    }\r\n  }\r\n\r\n  & :hover span {\r\n    @include theme('color', $primary-color-text);\r\n  }\r\n}\r\n\r\n.nav-link:hover .icon-home,\r\n.nav-link:hover .icon-profile,\r\n.nav-link:hover .icon-logout,\r\n.nav-link:hover .icon-book,\r\n.nav-link:hover .icon-book_add,\r\n.nav-link:hover .icon-book_change,\r\n.nav-link:hover .icon-admin_panel {\r\n  @include theme('background', $primary-color-text);\r\n}\r\n\r\n.text-nav {\r\n  user-select: none;\r\n  font-size: 20px;\r\n  @include theme('color', $primary-text-color);\r\n}\r\n\r\n.menu-open {\r\n  position: absolute;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  width: 25px;\r\n  height: 25px;\r\n  right: -18px;\r\n  top: 25px;\r\n  padding: 10px;\r\n  border-radius: 50%;\r\n  transform: rotate(-90deg);\r\n  transition: all 0.3s ease;\r\n  @include theme('background-color', $divider-color, false, !important);\r\n\r\n  .icon-arrow {\r\n    margin: 0px;\r\n    position: absolute;\r\n  }\r\n}\r\n\r\n.header-logo-text {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: start;\r\n  user-select: none;\r\n  z-index: 0;\r\n  @include theme('color', $primary-color);\r\n\r\n  & .name {\r\n    font-size: 28px;\r\n  }\r\n\r\n  & .profession {\r\n    font-size: 16px;\r\n  }\r\n}\r\n\r\n.notifications-list {\r\n  list-style-type: none;\r\n  padding: 0;\r\n  margin: 0;\r\n  padding-right:5px;\r\n  max-height: 300px; /* Установите максимальную высоту, при которой будет появляться скроллер */\r\n  overflow-y: auto;\r\n  & li {\r\n    margin-bottom: 10px;\r\n    border-radius: 5px;\r\n    border: 1px solid #bbbbbb;\r\n  }\r\n}\r\n\r\n.notification-content {\r\n  padding: 10px;\r\n}\r\n\r\n.notification-dot {\r\n  width: 8px;\r\n  height: 8px;\r\n  background-color: limegreen; /* Цвет точки можете настроить на свой вкус */\r\n  border-radius: 50%;\r\n  margin-left: auto;\r\n  margin-right: 10px;\r\n}\r\n\r\n.unread .notification-content {\r\n  font-weight: bold; /* Пример стилизации непрочитанных уведомлений */\r\n}\r\n\r\n.badge {\r\n  position: absolute;\r\n  left: 15px;\r\n  top:-5px;\r\n}\r\n</style>",
+      "start": 1715794738632,
+      "end": 1715794739831,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794739831,
+      "end": 1715794739831,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794739831,
+      "end": 1715794739831,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794739831,
+      "end": 1715794739831,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794739831,
+      "end": 1715794739831,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794739831,
+      "end": 1715794739831,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794739831,
+      "end": 1715794739831,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794739831,
+      "end": 1715794739831,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/components/TheNavbar.vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/components/TheNavbar.vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/components/TheNavbar.vue?vue&type=style&index=0&scoped=f76dce04&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-f76dce04\"]]);\n",
+      "start": 1715794739831,
+      "end": 1715794739882,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794739882,
+      "end": 1715794739883,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794739883,
+      "end": 1715794739883,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794739884,
+      "end": 1715794739885,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794739885,
+      "end": 1715794739885,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794739885,
+      "end": 1715794739885,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794739885,
+      "end": 1715794739885,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794739885,
+      "end": 1715794739885,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794739885,
+      "end": 1715794739885,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794739885,
+      "end": 1715794739885,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794739885,
+      "end": 1715794739885,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794739885,
+      "end": 1715794739885,
+      "order": "normal"
+    }
+  ]
+}

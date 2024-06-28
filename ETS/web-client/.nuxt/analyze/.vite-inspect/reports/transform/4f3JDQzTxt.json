@@ -1,0 +1,223 @@
+{
+  "resolvedId": "E:/Stusy/web-client/pages/admin/users/index.vue?macro=true",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\nimport {createUser, deleteUsers, fetchUsers, formatGroups, updateUser} from \"~/helpers/user\";\r\nimport {fetchGroups, getGroupFullNames} from '~/helpers/groups';\r\n\r\ndefinePageMeta({\r\n  layout: 'home',\r\n})\r\nuseHead({\r\n  title: 'Администрирование пользователей'\r\n})\r\n\r\ninterface User {\r\n  id?: number;\r\n  first_name?: string;\r\n  middle_name?: string;\r\n  last_name?: string;\r\n  username?: string;\r\n  password?: string;\r\n  email?: string;\r\n  lastLogin?: string;\r\n  avatar?: string;\r\n  about?: string;\r\n  // rolesId?: number;\r\n  role?: {\r\n    id: number;\r\n    code: string;\r\n    name: string;\r\n  };\r\n  groups?: {\r\n    id: number;\r\n    full_name: string;\r\n    abbreviation?: string;\r\n  }[];\r\n}\r\n\r\nconst toast = useToast();\r\nconst dt = ref();\r\nconst users = ref();\r\nconst userDialog = ref(false);\r\nconst deleteUserDialog = ref(false);\r\nconst deleteUsersDialog = ref(false);\r\nconst user = ref<User>({});\r\nconst selectedUsers = ref();\r\nconst filters = ref({\r\n  'global': {value: null, matchMode: FilterMatchMode.CONTAINS},\r\n});\r\nconst submitted = ref(false);\r\nconst roles = ref([]);\r\nconst statuses = ref([\r\n  {label: 'ACTIVE', value: 'active'},\r\n  {label: 'INACTIVE', value: 'inactive'},\r\n  {label: 'BLOCKED', value: 'blocked'}\r\n]);\r\n\r\nconst columns = ref([\r\n  {field: 'email', header: 'Почта'},\r\n  {field: 'fullname', header: 'ФИО'},\r\n  {field: 'username', header: 'Логин'},\r\n  {field: 'about', header: 'Описание'},\r\n  {field: 'role.name', header: 'Роль'},\r\n  {field: 'groups', header: 'Группы'}\r\n]);\r\nconst selectedColumns = ref(columns.value.filter(column => column.field !== 'about'));\r\nconst groups = ref([]);\r\nconst loading = ref(true);\r\nconst formatCurrency = (value) => {\r\n  if (value)\r\n    return value.toLocaleString('en-US', {style: 'currency', currency: 'USD'});\r\n  return;\r\n};\r\n\r\nconst openNew = () => {\r\n  user.value = {};\r\n  submitted.value = false;\r\n  userDialog.value = true;\r\n};\r\n\r\nconst hideDialog = () => {\r\n  userDialog.value = false;\r\n  submitted.value = false;\r\n};\r\n\r\nconst saveUser = () => {\r\n  submitted.value = true;\r\n\r\n  if (user?.value.username?.trim()) {\r\n    if (user.value.id) {\r\n      delete user.value.fullname;\r\n      updateUser(user.value.id, user.value) // Отправляем запрос на обновление пользователя\r\n          .then(data => {\r\n            users.value[findIndexById(user.value.id)] = data;\r\n            toast.add({severity: 'success', summary: 'Successful', detail: 'User Updated', life: 3000});\r\n            userDialog.value = false;\r\n            user.value = {};\r\n            getUsers()\r\n          })\r\n          .catch(error => console.error('Error updating user:', error));\r\n    } else {\r\n      createUser([user.value])\r\n          .then(data => {\r\n            users.value.push(data); // Добавляем созданного пользователя в список\r\n            toast.add({severity: 'success', summary: 'Successful', detail: 'User Created', life: 3000});\r\n          })\r\n          .catch(error => console.error('Error creating user:', error));\r\n    }\r\n\r\n    userDialog.value = false;\r\n    user.value = {};\r\n  }\r\n};\r\n\r\nconst editUser = (usr) => {\r\n  user.value = {...usr};\r\n  userDialog.value = true;\r\n  console.log(user)\r\n};\r\n\r\nconst confirmDeleteUser = (usr) => {\r\n  user.value = usr;\r\n  deleteUserDialog.value = true;\r\n};\r\n\r\nconst deleteUser = () => {\r\n  deleteUsers([user.value.id])\r\n      .then(data => {\r\n        users.value = users.value.filter(val => val.id !== user.value.id);\r\n        deleteUserDialog.value = false;\r\n        user.value = {};\r\n        toast.add({severity: 'success', summary: 'Успешно', detail: 'Пользователь удален', life: 3000});\r\n      })\r\n      .catch(error => console.error('Error delete user:', error));\r\n};\r\n\r\nconst findIndexById = (id) => {\r\n  let index = -1;\r\n  for (let i = 0; i < users.value.length; i++) {\r\n    if (users.value[i].id === id) {\r\n      index = i;\r\n      break;\r\n    }\r\n  }\r\n  return index;\r\n};\r\n\r\nconst createId = () => {\r\n  let id = '';\r\n  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r\n  for (var i = 0; i < 5; i++) {\r\n    id += chars.charAt(Math.floor(Math.random() * chars.length));\r\n  }\r\n  return id;\r\n};\r\n\r\nconst exportCSV = () => {\r\n  dt.value.exportCSV();\r\n};\r\n\r\nconst confirmDeleteSelected = () => {\r\n  deleteUsersDialog.value = true;\r\n};\r\n\r\nconst deleteSelectedUsers = () => {\r\n  deleteUsers(selectedUsers.value.map(user => user.id))\r\n      .then(data => {\r\n        users.value = users.value.filter(val => !selectedUsers.value.includes(val));\r\n        deleteUsersDialog.value = false;\r\n        selectedUsers.value = null;\r\n        toast.add({severity: 'success', summary: 'Успешно', detail: 'Пользователи удалены', life: 3000});\r\n      })\r\n      .catch(error => console.error('Error delete users:', error));\r\n};\r\n\r\nconst getStatusLabel = (status) => {\r\n  switch (status) {\r\n    case 'active':\r\n      return 'success';\r\n\r\n    case 'inactive':\r\n      return 'warning';\r\n\r\n    case 'blocked':\r\n      return 'danger';\r\n\r\n    default:\r\n      return null;\r\n  }\r\n};\r\nconst onToggleColumns = (val) => {\r\n  // Фильтруем выбранные колонки на основе значения мультиселектора\r\n  selectedColumns.value = columns.value.filter(col => val.includes(col));\r\n};\r\n\r\nconst getRoleNames = (role) => {\r\n  return role.name\r\n}\r\n// Получение пользователей с сервера при монтировании компонента\r\nimport {onMounted} from 'vue';\r\nimport {FilterMatchMode} from \"primevue/api\";\r\nimport {fetchRoles} from \"~/helpers/role\";\r\n\r\n\r\nfunction getUsers() {\r\n  fetchUsers()\r\n      .then(data => {\r\n        users.value = data.map(user => ({\r\n          ...user,\r\n          fullname: `${user.last_name} ${user.first_name} ${user.middle_name}`\r\n        }));\r\n        loading.value = false;\r\n      })\r\n      .catch(error => console.error('Error fetching users:', error));\r\n}\r\n\r\nconst updateRole = (value) => {\r\n  const selectedRoleObject = roles.value.find(role => role.name === value);\r\n  if (selectedRoleObject) {\r\n    // user.value.rolesId = selectedRoleObject.id;\r\n    user.value.role = selectedRoleObject; // Обновляем объект роли пользователя\r\n  }\r\n  console.log(user.value)\r\n};\r\n\r\nonMounted(() => {\r\n  getUsers();\r\n  fetchRoles()\r\n      .then(rolesData => {\r\n        roles.value = rolesData;\r\n      })\r\n      .catch(error => console.error('Error fetching roles:', error));\r\n  fetchGroups()\r\n      .then(groupsData => {\r\n        groups.value = groupsData;\r\n        console.log(groups.value)\r\n      })\r\n      .catch(error => console.error('Error fetching groups:', error));\r\n});\r\n\r\n</script>\r\n\r\n<template>\r\n  <div class=\"main-content\">\r\n    <Toast />\r\n    <div class=\"card\">\r\n      <Toolbar class=\"mb-4\">\r\n        <template #start>\r\n          <Button label=\"Добавить\" icon=\"pi pi-plus\" severity=\"success\" class=\"mr-2\" @click=\"openNew\"/>\r\n          <Button label=\"Удалить\" icon=\"pi pi-trash\" severity=\"danger\" @click=\"confirmDeleteSelected\"\r\n                  :disabled=\"!selectedUsers || !selectedUsers.length\"/>\r\n        </template>\r\n\r\n        <template #end>\r\n          <FileUpload mode=\"basic\" accept=\"image/*\" :maxFileSize=\"1000000\" label=\"Import\" chooseLabel=\"Импорт\"\r\n                      class=\"mr-2 inline-block\"/>\r\n          <Button label=\"Экспорт\" icon=\"pi pi-upload\" severity=\"help\" @click=\"exportCSV($event)\"/>\r\n        </template>\r\n      </Toolbar>\r\n\r\n      <DataTable ref=\"dt\" :value=\"users\" v-model:selection=\"selectedUsers\" dataKey=\"id\" :loading=\"loading\"\r\n                 style=\"max-width: 1500px\" tableStyle=\"min-width: 60rem\"\r\n                 showGridlines resizableColumns columnResizeMode=\"fit\"\r\n                 :paginator=\"true\" :rows=\"10\" :filters=\"filters\"\r\n                 paginatorTemplate=\"FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown\"\r\n                 :rowsPerPageOptions=\"[10,25,50]\"\r\n                 currentPageReportTemplate=\"Показаны {first} до {last} из {totalRecords}\">\r\n        <template #header>\r\n          <div class=\"flex flex-wrap gap-3 items-center justify-between mb-3\">\r\n            <div class=\"flex items-center gap-3\">\r\n              <h4 class=\"m-0 text-xl text-900 font-bold\">Управление пользователями</h4>\r\n              <Button icon=\"pi pi-refresh\" rounded raised @click=\"getUsers\"/>\r\n            </div>\r\n            <IconField iconPosition=\"left\">\r\n              <InputIcon>\r\n                <i class=\"pi pi-search\"/>\r\n              </InputIcon>\r\n              <InputText v-model=\"filters['global'].value\" placeholder=\"Поиск...\"/>\r\n            </IconField>\r\n          </div>\r\n          <MultiSelect v-model=\"selectedColumns\" :options=\"columns\" optionLabel=\"header\"\r\n                       @update:modelValue=\"onToggleColumns\"\r\n                       display=\"chip\" placeholder=\"Выберите колонки\"/>\r\n        </template>\r\n        <template #empty> Пользователи не найдены</template>\r\n\r\n        <Column selectionMode=\"multiple\" style=\"width: 3rem\" :exportable=\"false\"></Column>\r\n        <Column v-for=\"(col, index) of selectedColumns\" sortable :field=\"col.field\" :header=\"col.header\"\r\n                :key=\"col.field + '_' + index\">\r\n          <!-- Измененный код для колонки \"Группы\" -->\r\n          <template v-if=\"col.field !== 'groups' && col.field !== 'role.name'\" #body=\"slotProps\">\r\n            {{ slotProps.data[col.field] }}\r\n          </template>\r\n          <template v-else-if=\"col.field === 'role.name'\" #body=\"slotProps\">\r\n            {{ slotProps.data.role.name }}\r\n          </template>\r\n          <template v-else-if=\"col.field === 'groups'\" #body=\"slotProps\">\r\n            {{ getGroupFullNames(slotProps.data.groups) }}\r\n          </template>\r\n        </Column>\r\n\r\n\r\n        <!-- Действия для каждой строки -->\r\n        <Column :exportable=\"false\" style=\"min-width:8rem\">\r\n          <template #body=\"slotProps\">\r\n            <Button icon=\"pi pi-pencil\" outlined rounded class=\"mr-2\" @click=\"editUser(slotProps.data)\"/>\r\n            <Button icon=\"pi pi-trash\" outlined rounded severity=\"danger\" @click=\"confirmDeleteUser(slotProps.data)\"/>\r\n          </template>\r\n        </Column>\r\n      </DataTable>\r\n    </div>\r\n  </div>\r\n\r\n  <Dialog v-model:visible=\"userDialog\" :style=\"{width: '450px'}\" header=\"Сведения о пользователе\" :modal=\"true\"\r\n          class=\"p-fluid\">\r\n    <!-- Add user details form -->\r\n    <div class=\"field my-3\">\r\n      <label for=\"username\">Логин</label>\r\n      <InputText class=\"mt-2\" id=\"username\" v-model.trim=\"user.username\" required\r\n                 :invalid=\"submitted && !user.username\"/>\r\n      <small class=\"p-error\" v-if=\"submitted && !user.username\">Имя пользователя обязательно для заполнения.</small>\r\n    </div>\r\n    <div class=\"field my-3\">\r\n      <label for=\"password\">Пароль</label>\r\n      <Password class=\"mt-2\" id=\"password\" promptLabel=\"Введите пароль\" :weakLabel=\"'Слабый'\" :mediumLabel=\"'Средний'\"\r\n                :strongLabel=\"'Сильный'\" v-model.trim=\"user.password\" toggleMask required\r\n                :invalid=\"submitted && !user.password\"/>\r\n      <small class=\"p-error\" v-if=\"submitted && !user.password\">Пароль обязателен для заполнения.</small>\r\n    </div>\r\n    <div class=\"field my-3\">\r\n      <label for=\"first_name\">Имя</label>\r\n      <InputText class=\"mt-2\" id=\"first_name\" v-model.trim=\"user.first_name\" required autofocus\r\n                 :invalid=\"submitted && !user.first_name\"/>\r\n      <small class=\"p-error\" v-if=\"submitted && !user.first_name\">Имя обязательно для заполнения.</small>\r\n    </div>\r\n    <div class=\"field my-3\">\r\n      <label for=\"last_name\">Фамилия</label>\r\n      <InputText class=\"mt-2\" id=\"last_name\" v-model.trim=\"user.last_name\" required\r\n                 :invalid=\"submitted && !user.last_name\"/>\r\n      <small class=\"p-error\" v-if=\"submitted && !user.last_name\">Фамилия обязательна для заполнения.</small>\r\n    </div>\r\n    <div class=\"field my-3\">\r\n      <label for=\"middle_name\">Отчество</label>\r\n      <InputText class=\"mt-2\" id=\"middle_name\" v-model.trim=\"user.middle_name\"/>\r\n    </div>\r\n    <div class=\"field my-3\">\r\n      <label for=\"about\">Описание</label>\r\n      <Textarea class=\"mt-2\" id=\"about\" v-model.trim=\"user.about\"/>\r\n    </div>\r\n    <div class=\"field my-3\">\r\n      <label for=\"email\">Email</label>\r\n      <InputText class=\"mt-2\" id=\"email\" v-model.trim=\"user.email\" required :invalid=\"submitted && !user.email\"/>\r\n      <small class=\"p-error\" v-if=\"submitted && !user.email\">Email обязателен для заполнения.</small>\r\n    </div>\r\n    <div class=\"field my-3\">\r\n      <label for=\"role\">Роль</label>\r\n      <Dropdown class=\"mt-2\" id=\"role\" :modelValue=\"user.role ? user.role.name : ''\" @update:modelValue=\"updateRole\"\r\n                :options=\"roles.map(role => role.name)\" placeholder=\"Выберите роль\"/>\r\n    </div>\r\n    <div class=\"field my-3\">\r\n      <label for=\"groups\">Группы</label>\r\n      <MultiSelect class=\"mt-2\" v-model=\"user.groups\" :options=\"groups\" optionLabel=\"abbreviation\"\r\n                   :filter=\"true\" :filterFields=\"['full_name', 'abbreviation']\" display=\"chip\"\r\n                   placeholder=\"Выберите группы\">\r\n        <template #option=\"slotProps\">\r\n          <div class=\"flex flex-col justify-center flex-wrap\">\r\n            <div>{{ slotProps.option.full_name }}</div>\r\n            <div>{{ slotProps.option.abbreviation }}</div>\r\n          </div>\r\n        </template>\r\n      </MultiSelect>\r\n    </div>\r\n    <template #footer>\r\n      <Button label=\"Отмена\" icon=\"pi pi-times\" text @click=\"hideDialog\"/>\r\n      <Button label=\"Сохранить\" icon=\"pi pi-check\" text @click=\"saveUser\"/>\r\n    </template>\r\n  </Dialog>\r\n\r\n  <Dialog v-model:visible=\"deleteUserDialog\" :style=\"{width: '500px'}\" header=\"Подтверждение\" :modal=\"true\">\r\n    <div class=\"confirmation-content p-3\">\r\n      <i class=\"pi pi-exclamation-triangle mr-3\" style=\"font-size: 2rem\"/>\r\n      <span v-if=\"user\">Вы действительно хотите удалить пользователя <b>{{ user.fullname }}</b> <span\r\n          style=\"font-size: 0.90rem\">{{ user.username }}?</span></span>\r\n    </div>\r\n    <template #footer>\r\n      <Button label=\"Нет\" icon=\"pi pi-times\" text @click=\"deleteUserDialog = false\"/>\r\n      <Button label=\"Да\" icon=\"pi pi-check\" text @click=\"deleteUser\"/>\r\n    </template>\r\n  </Dialog>\r\n\r\n  <Dialog v-model:visible=\"deleteUsersDialog\" :style=\"{width: '450px'}\" header=\"Подтверждение\" :modal=\"true\">\r\n    <!-- Confirmation for deleting multiple users -->\r\n    <div class=\"confirmation-content p-3\">\r\n      <i class=\"pi pi-exclamation-triangle mr-3\" style=\"font-size: 2rem\"/>\r\n      <span v-if=\"user\">Вы действительно хотите удалить выделенных пользователей?</span>\r\n    </div>\r\n    <template #footer>\r\n      <Button label=\"Нет\" icon=\"pi pi-times\" text @click=\"deleteUsersDialog = false\"/>\r\n      <Button label=\"Да\" icon=\"pi pi-check\" text @click=\"deleteSelectedUsers\"/>\r\n    </template>\r\n  </Dialog>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n\r\n</style>",
+      "start": 1715794730660,
+      "end": 1715794731034,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794731034,
+      "end": 1715794731034,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794731034,
+      "end": 1715794731034,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794731034,
+      "end": 1715794731034,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794731034,
+      "end": 1715794731034,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794731034,
+      "end": 1715794731034,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794731034,
+      "end": 1715794731034,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794731034,
+      "end": 1715794731034,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/pages/admin/users/index.vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/pages/admin/users/index.vue?vue&type=script&setup=true&lang.ts\";\nexport default _sfc_main;\n",
+      "start": 1715794731034,
+      "end": 1715794731464,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794731465,
+      "end": 1715794731465,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731472,
+      "end": 1715794731473,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794731475,
+      "end": 1715794731476,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731476,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794731478,
+      "end": 1715794731478,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794731478,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794731480,
+      "end": 1715794731480,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794731481,
+      "end": 1715794731482,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794731482,
+      "end": 1715794731482,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794731483,
+      "end": 1715794731491,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794731492,
+      "end": 1715794731492,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "result": "export { default } from \"E:/Stusy/web-client/pages/admin/users/index.vue?macro=true&vue&type=script&setup=true&lang.ts\"",
+      "start": 1715794731494,
+      "end": 1715794731498,
+      "order": "post",
+      "sourcemaps": {
+        "version": 3,
+        "sources": [
+          ""
+        ],
+        "names": [],
+        "mappings": "AAAA"
+      }
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794731498,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794731499,
+      "end": 1715794731499,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794731499,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794731501,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794731501,
+      "end": 1715794731503,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794731503,
+      "end": 1715794731503,
+      "order": "normal"
+    }
+  ]
+}

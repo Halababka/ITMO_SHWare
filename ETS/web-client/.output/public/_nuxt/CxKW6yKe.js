@@ -1,0 +1,1 @@
+import{_ as o,c as s,e as c,v as a,x as t,f as _}from"./Bn8s6ksr.js";const d={},n=e=>(a("data-v-5a95929e"),e=e(),t(),e),r={class:"loader-overlay"},p=n(()=>_("div",{class:"loader"},null,-1)),l=[p];function i(e,f){return s(),c("div",r,l)}const v=o(d,[["render",i],["__scopeId","data-v-5a95929e"]]);export{v as _};

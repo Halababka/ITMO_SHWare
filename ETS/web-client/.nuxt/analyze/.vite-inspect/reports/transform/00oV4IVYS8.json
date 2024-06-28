@@ -1,0 +1,223 @@
+{
+  "resolvedId": "E:/Stusy/web-client/pages/tickets.vue?macro=true",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\nimport AwButton from \"~/components/ui-kit/AwButton.vue\";\r\n\r\ndefinePageMeta({layout: 'home'})\r\nuseHead({\r\n  title: 'Тикеты'\r\n})\r\n</script>\r\n\r\n<template>\r\n  <div class=\"main-content\">\r\n    <div class=\"tickets\">\r\n      <div class=\"ticket-card white-box\">\r\n        <h2>Название курса</h2>\r\n        <p class=\"author\"><b>Автор: </b>Имя В.</p>\r\n        <div class=\"materials\">\r\n          <b>Содержимое:</b>\r\n          <p>Файлики или ссылочки тексики </p>\r\n        </div>\r\n        <div class=\"input-form\">\r\n          <b>Отзыв:</b>\r\n          <textarea name=\"description\" id=\"description\" rows=\"3\"></textarea>\r\n        </div>\r\n        <AwButton>Ответить</AwButton>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n.tickets {\r\n  width: 100%;\r\n}\r\n\r\n.ticket-card {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 10px;\r\n}\r\n\r\n.review {\r\n  display: flex;\r\n  flex-direction: column;\r\n}\r\ntextarea{\r\n  margin: 0;\r\n  resize: none;\r\n}\r\n</style>",
+      "start": 1715794730913,
+      "end": 1715794731287,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794731287,
+      "end": 1715794731287,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794731287,
+      "end": 1715794731287,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794731287,
+      "end": 1715794731287,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794731287,
+      "end": 1715794731287,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794731287,
+      "end": 1715794731287,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794731287,
+      "end": 1715794731287,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794731287,
+      "end": 1715794731287,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/pages/tickets.vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/pages/tickets.vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/pages/tickets.vue?vue&type=style&index=0&scoped=63a00db5&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-63a00db5\"]]);\n",
+      "start": 1715794731287,
+      "end": 1715794731464,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794731465,
+      "end": 1715794731465,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731473,
+      "end": 1715794731473,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794731475,
+      "end": 1715794731476,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731476,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794731478,
+      "end": 1715794731478,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794731480,
+      "end": 1715794731480,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794731481,
+      "end": 1715794731482,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794731482,
+      "end": 1715794731482,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794731484,
+      "end": 1715794731491,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794731492,
+      "end": 1715794731492,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "result": "export { default } from \"E:/Stusy/web-client/pages/tickets.vue?macro=true&vue&type=script&setup=true&lang.ts\"",
+      "start": 1715794731497,
+      "end": 1715794731498,
+      "order": "post",
+      "sourcemaps": {
+        "version": 3,
+        "sources": [
+          ""
+        ],
+        "names": [],
+        "mappings": "AAAA"
+      }
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794731498,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794731499,
+      "end": 1715794731499,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794731500,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794731501,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794731501,
+      "end": 1715794731503,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794731503,
+      "end": 1715794731503,
+      "order": "normal"
+    }
+  ]
+}

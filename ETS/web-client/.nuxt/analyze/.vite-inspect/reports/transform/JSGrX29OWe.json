@@ -1,0 +1,214 @@
+{
+  "resolvedId": "E:/Stusy/web-client/pages/admin/groups/index.vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\nimport {\r\n  createGroup,\r\n  deleteGroups,\r\n  fetchGroups,\r\n  updateGroup,\r\n  deleteGroupUser,\r\n  formatGroupDates,\r\n  getGroupFullNames,\r\n  addUsersToGroup, fetchGroupsWithUsers\r\n} from \"~/helpers/groups\";\r\n\r\ndefinePageMeta({\r\n  layout: 'home',\r\n  middleware: [\r\n    'admin'\r\n  ]\r\n})\r\nuseHead({\r\n  title: 'Администрирование групп'\r\n})\r\n\r\nconst runtimeConfig = useRuntimeConfig()\r\nconst nuxtApp = useNuxtApp()\r\nconst router = useRouter();\r\n\r\nconst loading = ref(true)\r\nconst toast = useToast();\r\nconst dt = ref();\r\nconst groups = ref();\r\nconst groupDialog = ref(false);\r\nconst deleteGroupDialog = ref(false);\r\nconst deleteGroupsDialog = ref(false);\r\nconst group = ref({});\r\nconst selectedGroups = ref();\r\nconst filters = ref({\r\n  'global': {value: null, matchMode: FilterMatchMode.CONTAINS},\r\n});\r\nconst filtersUserTable = ref({\r\n  'global': {value: null, matchMode: FilterMatchMode.CONTAINS},\r\n})\r\nconst filtersExpandedUsers = ref({\r\n  'fullname': {value: null, matchMode: FilterMatchMode.CONTAINS},\r\n});\r\nconst submitted = ref(false);\r\nconst roles = ref([]);\r\nconst statuses = ref([\r\n  {label: 'ACTIVE', value: 'active'},\r\n  {label: 'INACTIVE', value: 'inactive'},\r\n  {label: 'BLOCKED', value: 'blocked'}\r\n]);\r\n\r\nconst columns = ref([\r\n  {field: 'full_name', header: 'Наименование'},\r\n  {field: 'abbreviation', header: 'Аббревиатура'},\r\n  {field: 'create_at', header: 'Дата создания'},\r\n  {field: 'updated_at', header: 'Дата обновления'},\r\n]);\r\nconst selectedColumns = ref(columns.value.filter(column => column.field !== 'updated_at'));\r\nconst expandedRows = ref({});\r\nconst selectedUsers = ref();\r\nconst users = ref();\r\nconst columnsUser = ref([\r\n  {field: 'email', header: 'Почта'},\r\n  {field: 'fullname', header: 'ФИО'},\r\n  {field: 'username', header: 'Логин'},\r\n  {field: 'about', header: 'Описание'},\r\n  {field: 'role.name', header: 'Роль'},\r\n  {field: 'groups', header: 'Группы'}\r\n]);\r\nconst selectedColumnsUser = ref(columnsUser.value.filter(column => column.field !== 'about'));\r\n\r\nconst openNew = () => {\r\n  group.value = {};\r\n  submitted.value = false;\r\n  groupDialog.value = true;\r\n};\r\n\r\nconst hideDialog = () => {\r\n  groupDialog.value = false;\r\n  submitted.value = false;\r\n};\r\n\r\nconst saveGroup = () => {\r\n  submitted.value = true;\r\n\r\n  if (group?.value.full_name?.trim()) {\r\n    if (group.value.id) {\r\n      console.log(group.value.id, group.value)\r\n      updateGroup(group.value.id, group.value) // Отправляем запрос на обновление группы\r\n          .then(data => {\r\n            groups.value[findIndexById(group.value.id)] = data;\r\n            toast.add({severity: 'success', summary: 'Successful', detail: 'group Updated', life: 3000});\r\n            groupDialog.value = false;\r\n            group.value = {};\r\n            getGroups()\r\n          })\r\n          .catch(error => console.error('Error updating group:', error));\r\n    } else {\r\n      createGroup(group.value)\r\n          .then(data => {\r\n            groups.value.push(data); // Добавляем созданного группы в список\r\n            toast.add({severity: 'success', summary: 'Successful', detail: 'group Created', life: 3000});\r\n          })\r\n          .catch(error => console.error('Error creating group:', error));\r\n    }\r\n\r\n    groupDialog.value = false;\r\n    group.value = {};\r\n  }\r\n};\r\n\r\nconst editGroup = (usr) => {\r\n  group.value = {...usr};\r\n  groupDialog.value = true;\r\n  console.log(group)\r\n};\r\n\r\nconst confirmDeleteGroup = (usr) => {\r\n  group.value = usr;\r\n  deleteGroupDialog.value = true;\r\n};\r\n\r\nconst deleteGroup = () => {\r\n  deleteGroups([group.value.id])\r\n      .then(data => {\r\n        groups.value = groups.value.filter(val => val.id !== group.value.id);\r\n        deleteGroupDialog.value = false;\r\n        group.value = {};\r\n        toast.add({severity: 'success', summary: 'Успешно', detail: 'Группа удалена', life: 3000});\r\n      })\r\n      .catch(error => console.error('Error delete group:', error));\r\n};\r\n\r\nconst removeUserFromGroup = (groupId, userIds) => {\r\n  deleteGroupUser(groupId, userIds)\r\n      .then(() => {\r\n        // Обновление списка групп после удаления пользователя\r\n        getGroups();\r\n        toast.add({severity: 'success', summary: 'Успешно', detail: 'Пользователь удален из группы', life: 3000});\r\n      })\r\n      .catch(error => console.error('Ошибка удаления пользователя из группы:', error))\r\n      .finally(getUsers);\r\n};\r\n\r\nconst addUserToGroup = (groupId, userIds) => {\r\n  addUsersToGroup(groupId, userIds)\r\n      .then(() => {\r\n        // Обновление списка групп после удаления пользователя\r\n        getGroups();\r\n        toast.add({severity: 'success', summary: 'Успешно', detail: 'Пользователь добавлен в группу', life: 3000});\r\n      })\r\n      .catch(error => console.error('Ошибка добавления пользователя в группу:', error));\r\n};\r\n\r\nconst findIndexById = (id) => {\r\n  let index = -1;\r\n  for (let i = 0; i < groups.value.length; i++) {\r\n    if (groups.value[i].id === id) {\r\n      index = i;\r\n      break;\r\n    }\r\n  }\r\n  return index;\r\n};\r\n\r\nconst createId = () => {\r\n  let id = '';\r\n  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r\n  for (var i = 0; i < 5; i++) {\r\n    id += chars.charAt(Math.floor(Math.random() * chars.length));\r\n  }\r\n  return id;\r\n};\r\n\r\nconst exportCSV = () => {\r\n  dt.value.exportCSV();\r\n};\r\n\r\nconst confirmDeleteSelected = () => {\r\n  deleteGroupsDialog.value = true;\r\n};\r\n\r\nconst confirmAddSelectedUserToGroup = () => {\r\n  console.log(selectedUsers.value)\r\n  addUserToGroup(group.value.id, selectedUsers.value.map(user => user.id))\r\n  selectedUsers.value = null\r\n}\r\n\r\nconst deleteSelectedGroups = () => {\r\n  deleteGroups(selectedGroups.value.map(group => group.id))\r\n      .then(data => {\r\n        groups.value = groups.value.filter(val => !selectedGroups.value.includes(val));\r\n        deleteGroupsDialog.value = false;\r\n        selectedGroups.value = null;\r\n        toast.add({severity: 'success', summary: 'Успешно', detail: 'Пользователи удалены', life: 3000});\r\n      })\r\n      .catch(error => console.error('Error delete groups:', error));\r\n};\r\n\r\nconst isGroupInDataGroups = (groupId, groups) => {\r\n  if (!groupId) {\r\n    return true; // Если groupId не задан, кнопка должна быть отключена\r\n  }\r\n\r\n  // Проверяем наличие id у вложенных элементов в groups\r\n  const hasValidGroupId = groups.some(group => {\r\n    return group?.id === groupId || (group?.children?.some(child => child?.id === groupId));\r\n  });\r\n\r\n  return !hasValidGroupId;\r\n}\r\n\r\nconst onToggleColumns = (val) => {\r\n  // Фильтруем выбранные колонки на основе значения мультиселектора\r\n  selectedColumns.value = columns.value.filter(col => val.includes(col));\r\n};\r\nconst onRowExpand = (event) => {\r\n  toast.add({severity: 'info', summary: 'Product Expanded', detail: event.data.name, life: 3000});\r\n};\r\nconst onRowCollapse = (event) => {\r\n  toast.add({severity: 'success', summary: 'Product Collapsed', detail: event.data.name, life: 3000});\r\n};\r\n// Получение групп с сервера при монтировании компонента\r\nimport {FilterMatchMode} from \"primevue/api\";\r\nimport {fetchUsers} from \"~/helpers/user\";\r\n\r\nfunction getGroups() {\r\n  fetchGroupsWithUsers()\r\n      .then(data => {\r\n        data.forEach(group => {\r\n          if (group.users) {\r\n            group.users.forEach(user => {\r\n              user.fullname = `${user.last_name} ${user.first_name} ${user.middle_name}`;\r\n              user.group_id = group.id;\r\n            });\r\n          }\r\n        });\r\n        groups.value = data.map(group => ({\r\n          ...group\r\n        }));\r\n        groups.value = formatGroupDates(groups.value)\r\n        console.log(groups.value)\r\n        loading.value = false;\r\n      })\r\n      .catch(error => console.error('Error fetching groups:', error));\r\n}\r\n\r\nfunction getUsers() {\r\n  loading.value = true\r\n  fetchUsers()\r\n      .then(data => {\r\n        users.value = data.map(user => ({\r\n          ...user,\r\n          fullname: `${user.last_name} ${user.first_name} ${user.middle_name}`\r\n        }));\r\n        loading.value = false;\r\n      })\r\n      .catch(error => console.error('Error fetching users:', error))\r\n      .finally(() => {\r\n        loading.value = false\r\n      });\r\n}\r\n\r\nonMounted(() => {\r\n  getGroups()\r\n  getUsers()\r\n});\r\n</script>\r\n\r\n\r\n<template>\r\n  <div class=\"main-content flex-col\">\r\n    <Toast />\r\n    <div class=\"card\">\r\n      <Toolbar class=\"mb-4\">\r\n        <template #start>\r\n          <Button label=\"Добавить\" icon=\"pi pi-plus\" severity=\"success\" class=\"mr-2\" @click=\"openNew\"/>\r\n          <Button label=\"Удалить\" icon=\"pi pi-trash\" severity=\"danger\" @click=\"confirmDeleteSelected\"\r\n                  :disabled=\"!selectedGroups || !selectedGroups.length\"/>\r\n        </template>\r\n\r\n        <template #end>\r\n          <FileUpload mode=\"basic\" accept=\"image/*\" :maxFileSize=\"1000000\" label=\"Import\" chooseLabel=\"Импорт\"\r\n                      class=\"mr-2 inline-block\"/>\r\n          <Button label=\"Экспорт\" icon=\"pi pi-upload\" severity=\"help\" @click=\"exportCSV($event)\"/>\r\n        </template>\r\n      </Toolbar>\r\n\r\n      <DataTable ref=\"dt\" v-model:expandedRows=\"expandedRows\" :value=\"groups\" v-model:selection=\"selectedGroups\"\r\n                 dataKey=\"id\"\r\n                 style=\"max-width: 1500px\" :loading=\"loading\"\r\n                 @rowExpand=\"onRowExpand\" @rowCollapse=\"onRowCollapse\"\r\n                 showGridlines resizableColumns columnResizeMode=\"fit\"\r\n                 :paginator=\"true\" :rows=\"10\" :filters=\"filters\"\r\n                 paginatorTemplate=\"FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown\"\r\n                 :rowsPerPageOptions=\"[10,25,50]\"\r\n                 currentPageReportTemplate=\"Показаны {first} до {last} из {totalRecords}\">\r\n        <template #header>\r\n          <div class=\"flex flex-wrap gap-3 items-center justify-between mb-3\">\r\n            <div class=\"flex items-center gap-3\">\r\n              <h4 class=\"m-0 text-xl text-900 font-bold\">Управление группами</h4>\r\n              <Button icon=\"pi pi-refresh\" rounded raised @click=\"getGroups\"/>\r\n            </div>\r\n            <IconField iconPosition=\"left\">\r\n              <InputIcon>\r\n                <i class=\"pi pi-search\"/>\r\n              </InputIcon>\r\n              <InputText v-model=\"filters['global'].value\" placeholder=\"Поиск...\"/>\r\n            </IconField>\r\n          </div>\r\n          <MultiSelect v-model=\"selectedColumns\" :options=\"columns\" optionLabel=\"header\"\r\n                       @update:modelValue=\"onToggleColumns\"\r\n                       display=\"chip\" placeholder=\"Выберите колонки\"/>\r\n        </template>\r\n        <Column expander style=\"width: 3rem\"/>\r\n        <Column selectionMode=\"multiple\" style=\"width: 3rem\" :exportable=\"false\"></Column>\r\n        <Column v-for=\"(col, index) of selectedColumns\" sortable :field=\"col.field\" :header=\"col.header\"\r\n                :key=\"col.field + '_' + index\"/>\r\n\r\n        <!-- Действия для каждой строки -->\r\n        <Column :exportable=\"false\" style=\"min-width:8rem\">\r\n          <template #body=\"slotProps\">\r\n            <Button icon=\"pi pi-pencil\" outlined rounded class=\"mr-2\" @click=\"editGroup(slotProps.data)\"/>\r\n            <Button icon=\"pi pi-trash\" outlined rounded severity=\"danger\" @click=\"confirmDeleteGroup(slotProps.data)\"/>\r\n          </template>\r\n        </Column>\r\n        <!-- Расширенная таблица -->\r\n        <template #expansion=\"slotProps\">\r\n          <div>\r\n            <h4 class=\"m-0 mb-2\">Участники группы {{ slotProps.data.abbreviation }}</h4>\r\n            <DataTable v-if=\"slotProps.data.users?.length !== 0\"\r\n                       v-model:filters=\"filtersExpandedUsers\" filterDisplay=\"row\" :globalFilterFields=\"['fullname']\"\r\n                       :value=\"slotProps.data.users\"\r\n                       :paginator=\"true\" :rows=\"20\"\r\n                       paginatorTemplate=\"FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown\"\r\n                       :rowsPerPageOptions=\"[20,40,80]\"\r\n                       currentPageReportTemplate=\"Показаны {first} до {last} из {totalRecords}\">\r\n\r\n              <Column field=\"fullname\" header=\"ФИО\">\r\n                <template #body=\"slotProps\">\r\n                  {{ slotProps.data.fullname }}\r\n                </template>\r\n                <template #filter=\"{ filterModel, filterCallback }\">\r\n                  <InputText v-model=\"filterModel.value\" type=\"text\" @input=\"filterCallback()\" class=\"p-column-filter\"\r\n                             placeholder=\"Поиск по имени\"/>\r\n                </template>\r\n              </Column>\r\n              <Column field=\"email\" header=\"Почта\">\r\n                <template #body=\"slotProps\">\r\n                  {{ slotProps.data.email }}\r\n                </template>\r\n              </Column>\r\n              <Column field=\"username\" header=\"Логин\">\r\n                <template #body=\"slotProps\">\r\n                  {{ slotProps.data.username }}\r\n                </template>\r\n              </Column>\r\n\r\n              <Column :exportable=\"false\" style=\"width: 2rem\">\r\n                <template #body=\"slotProps\">\r\n                  <Button icon=\"pi pi-trash\" outlined rounded severity=\"danger\"\r\n                          @click=\"removeUserFromGroup(slotProps.data.group_id, [slotProps.data.id])\"/>\r\n                </template>\r\n              </Column>\r\n            </DataTable>\r\n          </div>\r\n        </template>\r\n      </DataTable>\r\n    </div>\r\n    <div>\r\n      <h2>Присоединение к группе</h2>\r\n      <div class=\"card\">\r\n        <Toolbar class=\"mb-4\">\r\n          <template #start>\r\n            <Button label=\"Добавить\" icon=\"pi pi-plus\" severity=\"success\" @click=\"confirmAddSelectedUserToGroup\"\r\n                    :disabled=\"!selectedUsers || !selectedUsers.length || !group.id\"/>\r\n          </template>\r\n          <template #end>\r\n            <Dropdown v-model=\"group\" :options=\"groups\" filter optionLabel=\"abbreviation\" placeholder=\"Выберите группу\"\r\n                      class=\"w-full md:w-14rem\">\r\n              <template #value=\"slotProps\">\r\n                <div v-if=\"slotProps.value.abbreviation\" class=\"flex align-items-center\">\r\n                  <div>{{ slotProps.value.abbreviation }}</div>\r\n                </div>\r\n                <span v-else>\r\n                  {{ slotProps.placeholder }}\r\n                </span>\r\n              </template>\r\n              <template #option=\"slotProps\">\r\n                <div class=\"flex flex-col justify-center flex-wrap\">\r\n                  <div>{{ slotProps.option.full_name }}</div>\r\n                  <div>{{ slotProps.option.abbreviation }}</div>\r\n                </div>\r\n              </template>\r\n            </Dropdown>\r\n          </template>\r\n        </Toolbar>\r\n\r\n        <DataTable ref=\"dt\" :value=\"users\" v-model:selection=\"selectedUsers\" dataKey=\"id\" :loading=\"loading\"\r\n                   style=\"max-width: 1500px\" tableStyle=\"min-width: 60rem\"\r\n                   showGridlines resizableColumns columnResizeMode=\"fit\"\r\n                   :paginator=\"true\" :rows=\"10\" :filters=\"filtersUserTable\"\r\n                   paginatorTemplate=\"FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown\"\r\n                   :rowsPerPageOptions=\"[10,25,50]\"\r\n                   currentPageReportTemplate=\"Показаны {first} до {last} из {totalRecords}\">\r\n          <template #header>\r\n            <div class=\"flex flex-wrap gap-3 items-center justify-between mb-3\">\r\n              <div class=\"flex items-center gap-3\">\r\n                <h4 class=\"m-0 text-xl text-900 font-bold\">Пользователи</h4>\r\n                <Button icon=\"pi pi-refresh\" rounded raised @click=\"getUsers\"/>\r\n              </div>\r\n              <IconField iconPosition=\"left\">\r\n                <InputIcon>\r\n                  <i class=\"pi pi-search\"/>\r\n                </InputIcon>\r\n                <InputText v-model=\"filtersUserTable['global'].value\" placeholder=\"Поиск...\"/>\r\n              </IconField>\r\n            </div>\r\n            <MultiSelect v-model=\"selectedColumnsUser\" :options=\"columnsUser\" optionLabel=\"header\"\r\n                         @update:modelValue=\"onToggleColumns\"\r\n                         display=\"chip\" placeholder=\"Выберите колонки\"/>\r\n          </template>\r\n          <template #empty> Пользователи не найдены</template>\r\n\r\n          <Column selectionMode=\"multiple\" style=\"width: 3rem\" :exportable=\"false\"></Column>\r\n          <Column v-for=\"(col, index) of selectedColumnsUser\" sortable :field=\"col.field\" :header=\"col.header\"\r\n                  :key=\"col.field + '_' + index\">\r\n            <!-- Измененный код для колонки \"Группы\" -->\r\n            <template v-if=\"col.field !== 'groups' && col.field !== 'role.name'\" #body=\"slotProps\">\r\n              {{ slotProps.data[col.field] }}\r\n            </template>\r\n            <template v-else-if=\"col.field === 'role.name'\" #body=\"slotProps\">\r\n              {{ slotProps.data.role.name }}\r\n            </template>\r\n            <template v-else-if=\"col.field === 'groups'\" #body=\"slotProps\">\r\n              {{ getGroupFullNames(slotProps.data.groups) }}\r\n            </template>\r\n          </Column>\r\n\r\n\r\n          <!-- Действия для каждой строки -->\r\n          <Column :exportable=\"false\" style=\"min-width:8rem\">\r\n            <template #body=\"slotProps\">\r\n              <Button icon=\"pi pi-plus\" outlined rounded class=\"mr-2\" severity=\"success\"\r\n                      :disabled=\"!group.id\"\r\n                      @click=\"addUserToGroup(group.id, [slotProps.data.id])\"/>\r\n              <Button icon=\"pi pi-trash\" outlined rounded severity=\"danger\"\r\n                      :disabled=\"isGroupInDataGroups(group.id, slotProps.data.groups)\"\r\n                      @click=\"removeUserFromGroup(group.id, [slotProps.data.id])\"/>\r\n            </template>\r\n          </Column>\r\n        </DataTable>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <Dialog v-model:visible=\"groupDialog\" :style=\"{width: '450px'}\" header=\"Сведения о группе\" :modal=\"true\"\r\n          class=\"p-fluid\">\r\n    <!-- Add group details form -->\r\n    <div class=\"field my-3\">\r\n      <label for=\"full_name\">Полное название</label>\r\n      <InputText class=\"mt-2\" id=\"full_name\" v-model.trim=\"group.full_name\" required\r\n                 :invalid=\"submitted && !group.full_name\"/>\r\n      <small class=\"p-error\" v-if=\"submitted && !group.full_name\">Полное название обязательно для заполнения.</small>\r\n    </div>\r\n\r\n    <div class=\"field my-3\">\r\n      <label for=\"abbreviation\">Аббревиатура</label>\r\n      <InputText class=\"mt-2\" id=\"abbreviation\" v-model.trim=\"group.abbreviation\" required\r\n                 :invalid=\"submitted && !group.abbreviation\"/>\r\n      <small class=\"p-error\" v-if=\"submitted && !group.abbreviation\">Аббревиатура обязательна для заполнения.</small>\r\n    </div>\r\n    <template #footer>\r\n      <Button label=\"Отмена\" icon=\"pi pi-times\" text @click=\"hideDialog\"/>\r\n      <Button label=\"Сохранить\" icon=\"pi pi-check\" text @click=\"saveGroup\"/>\r\n    </template>\r\n  </Dialog>\r\n\r\n  <Dialog v-model:visible=\"deleteGroupDialog\" :style=\"{width: '500px'}\" header=\"Подтверждение\" :modal=\"true\">\r\n    <div class=\"confirmation-content p-3\">\r\n      <i class=\"pi pi-exclamation-triangle mr-3\" style=\"font-size: 2rem\"/>\r\n      <span v-if=\"group\">Вы действительно хотите удалить группу <b>{{ group.full_name }}</b></span>\r\n    </div>\r\n    <template #footer>\r\n      <Button label=\"Нет\" icon=\"pi pi-times\" text @click=\"deleteGroupDialog = false\"/>\r\n      <Button label=\"Да\" icon=\"pi pi-check\" text @click=\"deleteGroup\"/>\r\n    </template>\r\n  </Dialog>\r\n\r\n  <Dialog v-model:visible=\"deleteGroupsDialog\" :style=\"{width: '450px'}\" header=\"Подтверждение\" :modal=\"true\">\r\n    <!-- Confirmation for deleting multiple groups -->\r\n    <div class=\"confirmation-content p-3\">\r\n      <i class=\"pi pi-exclamation-triangle mr-3\" style=\"font-size: 2rem\"/>\r\n      <span v-if=\"group\">Вы действительно хотите удалить выделенные группы?</span>\r\n    </div>\r\n    <template #footer>\r\n      <Button label=\"Нет\" icon=\"pi pi-times\" text @click=\"deleteGroupsDialog = false\"/>\r\n      <Button label=\"Да\" icon=\"pi pi-check\" text @click=\"deleteSelectedGroups\"/>\r\n    </template>\r\n  </Dialog>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n@use '@/assets/scss/main.scss' as *;\r\n\r\n.main-content {\r\n  align-content: center !important;\r\n  align-items: center !important;\r\n}\r\n\r\n.p-button-text {\r\n  margin-right: 0.5rem;\r\n}\r\n\r\n.mt-4 {\r\n  margin-top: 1rem;\r\n}\r\n\r\n.mb-4 {\r\n  margin-bottom: 1rem;\r\n}\r\n</style>",
+      "start": 1715794730916,
+      "end": 1715794731289,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/pages/admin/groups/index.vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/pages/admin/groups/index.vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/pages/admin/groups/index.vue?vue&type=style&index=0&scoped=8c1ca0b2&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-8c1ca0b2\"]]);\n",
+      "start": 1715794731290,
+      "end": 1715794731464,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794731465,
+      "end": 1715794731465,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731473,
+      "end": 1715794731473,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794731476,
+      "end": 1715794731476,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794731478,
+      "end": 1715794731478,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794731480,
+      "end": 1715794731480,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794731481,
+      "end": 1715794731482,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794731482,
+      "end": 1715794731482,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794731484,
+      "end": 1715794731491,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794731492,
+      "end": 1715794731492,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794731498,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794731498,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794731499,
+      "end": 1715794731499,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794731500,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794731501,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794731501,
+      "end": 1715794731503,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794731503,
+      "end": 1715794731503,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "resolvedId": "E:/Stusy/web-client/helpers/auth.ts",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "const runtimeConfig = useRuntimeConfig()\r\n\r\nexport async function login(username: string, password: string) {\r\n    try {\r\n        return await fetch(`${runtimeConfig.public.apiBase}/auth`, {\r\n            method: \"POST\",\r\n            headers: {\r\n                \"Content-Type\": \"application/json\"\r\n            },\r\n            body: JSON.stringify({\r\n                username: username,\r\n                password: password\r\n            })\r\n        })\r\n    } catch (error) {\r\n        console.log(error)\r\n    }\r\n}\r\n",
+      "start": 1715794737023,
+      "end": 1715794737423,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794737423,
+      "end": 1715794737423,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794737423,
+      "end": 1715794737423,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794737423,
+      "end": 1715794737423,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794737423,
+      "end": 1715794737423,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "result": "const runtimeConfig = useRuntimeConfig();\nexport async function login(username, password) {\n  try {\n    return await fetch(`${runtimeConfig.public.apiBase}/auth`, {\n      method: \"POST\",\n      headers: {\n        \"Content-Type\": \"application/json\"\n      },\n      body: JSON.stringify({\n        username,\n        password\n      })\n    });\n  } catch (error) {\n    console.log(error);\n  }\n}\n",
+      "start": 1715794737423,
+      "end": 1715794737995,
+      "order": "normal",
+      "sourcemaps": {
+        "version": 3,
+        "sources": [
+          "E:/Stusy/web-client/helpers/auth.ts"
+        ],
+        "sourcesContent": [
+          "const runtimeConfig = useRuntimeConfig()\r\n\r\nexport async function login(username: string, password: string) {\r\n    try {\r\n        return await fetch(`${runtimeConfig.public.apiBase}/auth`, {\r\n            method: \"POST\",\r\n            headers: {\r\n                \"Content-Type\": \"application/json\"\r\n            },\r\n            body: JSON.stringify({\r\n                username: username,\r\n                password: password\r\n            })\r\n        })\r\n    } catch (error) {\r\n        console.log(error)\r\n    }\r\n}\r\n"
+        ],
+        "mappings": "AAAA,MAAM,gBAAgB,iBAAiB;AAEvC,sBAAsB,MAAM,UAAkB,UAAkB;AAC5D,MAAI;AACA,WAAO,MAAM,MAAM,GAAG,cAAc,OAAO,OAAO,SAAS;AAAA,MACvD,QAAQ;AAAA,MACR,SAAS;AAAA,QACL,gBAAgB;AAAA,MACpB;AAAA,MACA,MAAM,KAAK,UAAU;AAAA,QACjB;AAAA,QACA;AAAA,MACJ,CAAC;AAAA,IACL,CAAC;AAAA,EACL,SAAS,OAAO;AACZ,YAAQ,IAAI,KAAK;AAAA,EACrB;AACJ;",
+        "names": []
+      }
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794737995,
+      "end": 1715794737995,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794737995,
+      "end": 1715794737995,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1715794737996,
+      "end": 1715794737996,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794737996,
+      "end": 1715794737996,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794738001,
+      "end": 1715794738001,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794738002,
+      "end": 1715794738002,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794738002,
+      "end": 1715794738002,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794738002,
+      "end": 1715794738002,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794738002,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794738003,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794738003,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794738003,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794738004,
+      "end": 1715794738005,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794738006,
+      "end": 1715794738006,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794738006,
+      "end": 1715794738006,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "result": "import { useRuntimeConfig } from '#app/nuxt';\nconst runtimeConfig = useRuntimeConfig();\nexport async function login(username, password) {\n  try {\n    return await fetch(`${runtimeConfig.public.apiBase}/auth`, {\n      method: \"POST\",\n      headers: {\n        \"Content-Type\": \"application/json\"\n      },\n      body: JSON.stringify({\n        username,\n        password\n      })\n    });\n  } catch (error) {\n    console.log(error);\n  }\n}\n",
+      "start": 1715794738007,
+      "end": 1715794738007,
+      "order": "post",
+      "sourcemaps": {
+        "version": 3,
+        "sources": [
+          ""
+        ],
+        "names": [],
+        "mappings": ";AAAA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACzC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACjD,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChE,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACrB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC1C,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACR,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC5B,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACjB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACR,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACnB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvB,CAAC,CAAC,CAAC;AACH,CAAC;"
+      }
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794738008,
+      "end": 1715794738008,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794738008,
+      "end": 1715794738008,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794738008,
+      "end": 1715794738008,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794738009,
+      "end": 1715794738009,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794738009,
+      "end": 1715794738009,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794738009,
+      "end": 1715794738009,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794738009,
+      "end": 1715794738009,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794738009,
+      "end": 1715794738009,
+      "order": "normal"
+    }
+  ]
+}

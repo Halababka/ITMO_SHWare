@@ -1,0 +1,214 @@
+{
+  "resolvedId": "E:/Stusy/web-client/components/ui-kit/AwСheckmark.vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\nconst props = defineProps({\r\n  complete: {\r\n    type: Boolean,\r\n    required: true,\r\n  },\r\n  timeout: {\r\n    type: Number,\r\n    default: 2000\r\n  },\r\n})\r\n\r\nconst emit = defineEmits(['toggleComplete'])\r\n\r\nconst toggleComplete = () => {\r\n  emit(\"toggleComplete\")\r\n}\r\n\r\nfunction hideCheckmark() {\r\n  if (props.complete == true) {\r\n    setTimeout(() => {\r\n      toggleComplete()\r\n    }, props.timeout)\r\n  }\r\n}\r\n\r\nonMounted(() => {\r\n  hideCheckmark()\r\n})\r\n\r\nwatch(() => props.complete?.valueOf(), () => {\r\n  hideCheckmark()\r\n});\r\n</script>\r\n\r\n<template>\r\n  <transition name=\"fade\">\r\n    <div class=\"checkmark-wrapper\" v-if=\"props.complete\">\r\n      <svg class=\"checkmark\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 52\">\r\n        <circle class=\"checkmark__circle\" cx=\"26\" cy=\"26\" r=\"24\" fill=\"none\"/>\r\n        <path class=\"checkmark__check\" fill=\"none\" d=\"M14.1 27.2l7.1 7.2 16.7-16.8\"/>\r\n      </svg>\r\n    </div>\r\n    </transition>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n@use '@/assets/scss/main.scss' as *;\r\n.fade-enter-active,\r\n.fade-leave-active {\r\n  transition: opacity 0.5s ease;\r\n}\r\n\r\n.fade-enter-from,\r\n.fade-leave-to {\r\n  opacity: 0;\r\n}\r\n\r\n.checkmark-wrapper {\r\n  position: fixed;\r\n  top: 50%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  z-index: 10;\r\n}\r\n\r\n.checkmark__circle {\r\n  stroke-dasharray: 166;\r\n  stroke-dashoffset: 166;\r\n  stroke-width: 2;\r\n  stroke-miterlimit: 10;\r\n  @include theme('stroke', $primary-color);\r\n  fill: none;\r\n  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;\r\n}\r\n\r\n.checkmark {\r\n  width: 156px;\r\n  height: 156px;\r\n  border-radius: 50%;\r\n  display: block;\r\n  stroke-width: 2;\r\n  stroke: #fff;\r\n  stroke-miterlimit: 10;\r\n  margin: 10% auto;\r\n  @include theme('box-shadow', $primary-color, true, 'inset 0 0 0');\r\n  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;\r\n}\r\n\r\n.checkmark__check {\r\n  transform-origin: 50% 50%;\r\n  stroke-dasharray: 48;\r\n  stroke-dashoffset: 48;\r\n  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;\r\n}\r\n\r\n@keyframes stroke {\r\n  100% {\r\n    stroke-dashoffset: 0;\r\n  }\r\n}\r\n\r\n@keyframes scale {\r\n  0%, 100% {\r\n    transform: none;\r\n  }\r\n  50% {\r\n    transform: scale3d(1.1, 1.1, 1);\r\n  }\r\n}\r\n\r\n@keyframes fill {\r\n  100% {\r\n    //box-shadow: inset 0px 0px 0px 80px #7ac142;\r\n    @include theme('box-shadow', $primary-color, true, 'inset 0 0 0 80px');\r\n  }\r\n}\r\n</style>",
+      "start": 1715794737406,
+      "end": 1715794737977,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794737977,
+      "end": 1715794737977,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794737977,
+      "end": 1715794737977,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794737977,
+      "end": 1715794737977,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794737977,
+      "end": 1715794737977,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794737977,
+      "end": 1715794737977,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794737977,
+      "end": 1715794737977,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794737977,
+      "end": 1715794737977,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/components/ui-kit/Aw\\u0421heckmark.vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/components/ui-kit/Aw\\u0421heckmark.vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/components/ui-kit/Aw\\u0421heckmark.vue?vue&type=style&index=0&scoped=23e465bf&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-23e465bf\"]]);\n",
+      "start": 1715794737977,
+      "end": 1715794738291,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794738291,
+      "end": 1715794738291,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794738291,
+      "end": 1715794738291,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794738291,
+      "end": 1715794738291,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794738291,
+      "end": 1715794738291,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794738291,
+      "end": 1715794738296,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794738296,
+      "end": 1715794738296,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794738296,
+      "end": 1715794738296,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794738296,
+      "end": 1715794738296,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794738296,
+      "end": 1715794738297,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794738297,
+      "end": 1715794738297,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794738297,
+      "end": 1715794738297,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794738297,
+      "end": 1715794738297,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794738297,
+      "end": 1715794738297,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794738297,
+      "end": 1715794738297,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794738297,
+      "end": 1715794738297,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794738297,
+      "end": 1715794738298,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794738298,
+      "end": 1715794738299,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794738299,
+      "end": 1715794738299,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794738299,
+      "end": 1715794738299,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794738299,
+      "end": 1715794738300,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794738300,
+      "end": 1715794738300,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794738300,
+      "end": 1715794738300,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794738300,
+      "end": 1715794738300,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794738300,
+      "end": 1715794738300,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794738300,
+      "end": 1715794738300,
+      "order": "normal"
+    }
+  ]
+}

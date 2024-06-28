@@ -1,0 +1,231 @@
+{
+  "resolvedId": "E:/Stusy/web-client/helpers/user.ts",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "const runtimeConfig = useRuntimeConfig()\r\nexport const fetchUsers = async () => {\r\n  try {\r\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\r\n      headers: {\r\n        Authorization: `${useCookie(\"token\").value}`\r\n      }\r\n    });\r\n    if (!response.ok) {\r\n      throw new Error('Failed to fetch users');\r\n    }\r\n    const data = await response.json();\r\n    return data;\r\n  } catch (error) {\r\n    console.error('Error fetching users:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\nexport const createUser = async (userData) => {\r\n  try {\r\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\r\n      method: 'POST',\r\n      headers: {\r\n        'Content-Type': 'application/json',\r\n        Authorization: `${useCookie(\"token\").value}`\r\n      },\r\n      body: JSON.stringify(userData)\r\n    });\r\n    if (!response.ok) {\r\n      throw new Error('Failed to create user');\r\n    }\r\n    const data = await response.json();\r\n    return data;\r\n  } catch (error) {\r\n    console.error('Error creating user:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\nexport const updateUser = async (userId, userData) => {\r\n  try {\r\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users/${userId}`, {\r\n      method: 'PUT',\r\n      headers: {\r\n        'Content-Type': 'application/json',\r\n        Authorization: `${useCookie(\"token\").value}`\r\n      },\r\n      body: JSON.stringify(userData)\r\n    });\r\n    if (!response.ok) {\r\n      throw new Error('Failed to update user');\r\n    }\r\n    const updatedUser = await response.json();\r\n    return updatedUser;\r\n  } catch (error) {\r\n    console.error('Error updating user:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\nexport const deleteUsers = async (selectedUserIds) => {\r\n  try {\r\n    console.log(typeof(selectedUserIds))\r\n    console.log(selectedUserIds)\r\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\r\n      method: \"DELETE\",\r\n      headers: {\r\n        Authorization: `${useCookie(\"token\").value}`,\r\n        \"Content-Type\": \"application/json\",\r\n      },\r\n      body: JSON.stringify({\r\n        \"userIds\": selectedUserIds\r\n      }),\r\n    });\r\n    if (!response.ok) {\r\n      throw new Error('Failed to delete users');\r\n    }\r\n    const data = await response.json();\r\n    return data;\r\n  } catch (error) {\r\n    console.error('Error deleting users:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\nexport const formatGroups = (users) => {\r\n  users.forEach(user => {\r\n    user.groups = user.groups.map(group => group.full_name).join(', ');\r\n  });\r\n  return users;\r\n};",
+      "start": 1715794737514,
+      "end": 1715794738231,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794738231,
+      "end": 1715794738231,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794738231,
+      "end": 1715794738231,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794738231,
+      "end": 1715794738231,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794738231,
+      "end": 1715794738231,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "result": "const runtimeConfig = useRuntimeConfig();\nexport const fetchUsers = async () => {\n  try {\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\n      headers: {\n        Authorization: `${useCookie(\"token\").value}`\n      }\n    });\n    if (!response.ok) {\n      throw new Error(\"Failed to fetch users\");\n    }\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error(\"Error fetching users:\", error);\n    throw error;\n  }\n};\nexport const createUser = async (userData) => {\n  try {\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\n      method: \"POST\",\n      headers: {\n        \"Content-Type\": \"application/json\",\n        Authorization: `${useCookie(\"token\").value}`\n      },\n      body: JSON.stringify(userData)\n    });\n    if (!response.ok) {\n      throw new Error(\"Failed to create user\");\n    }\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error(\"Error creating user:\", error);\n    throw error;\n  }\n};\nexport const updateUser = async (userId, userData) => {\n  try {\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users/${userId}`, {\n      method: \"PUT\",\n      headers: {\n        \"Content-Type\": \"application/json\",\n        Authorization: `${useCookie(\"token\").value}`\n      },\n      body: JSON.stringify(userData)\n    });\n    if (!response.ok) {\n      throw new Error(\"Failed to update user\");\n    }\n    const updatedUser = await response.json();\n    return updatedUser;\n  } catch (error) {\n    console.error(\"Error updating user:\", error);\n    throw error;\n  }\n};\nexport const deleteUsers = async (selectedUserIds) => {\n  try {\n    console.log(typeof selectedUserIds);\n    console.log(selectedUserIds);\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\n      method: \"DELETE\",\n      headers: {\n        Authorization: `${useCookie(\"token\").value}`,\n        \"Content-Type\": \"application/json\"\n      },\n      body: JSON.stringify({\n        \"userIds\": selectedUserIds\n      })\n    });\n    if (!response.ok) {\n      throw new Error(\"Failed to delete users\");\n    }\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error(\"Error deleting users:\", error);\n    throw error;\n  }\n};\nexport const formatGroups = (users) => {\n  users.forEach((user) => {\n    user.groups = user.groups.map((group) => group.full_name).join(\", \");\n  });\n  return users;\n};\n",
+      "start": 1715794738231,
+      "end": 1715794738493,
+      "order": "normal",
+      "sourcemaps": {
+        "version": 3,
+        "sources": [
+          "E:/Stusy/web-client/helpers/user.ts"
+        ],
+        "sourcesContent": [
+          "const runtimeConfig = useRuntimeConfig()\r\nexport const fetchUsers = async () => {\r\n  try {\r\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\r\n      headers: {\r\n        Authorization: `${useCookie(\"token\").value}`\r\n      }\r\n    });\r\n    if (!response.ok) {\r\n      throw new Error('Failed to fetch users');\r\n    }\r\n    const data = await response.json();\r\n    return data;\r\n  } catch (error) {\r\n    console.error('Error fetching users:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\nexport const createUser = async (userData) => {\r\n  try {\r\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\r\n      method: 'POST',\r\n      headers: {\r\n        'Content-Type': 'application/json',\r\n        Authorization: `${useCookie(\"token\").value}`\r\n      },\r\n      body: JSON.stringify(userData)\r\n    });\r\n    if (!response.ok) {\r\n      throw new Error('Failed to create user');\r\n    }\r\n    const data = await response.json();\r\n    return data;\r\n  } catch (error) {\r\n    console.error('Error creating user:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\nexport const updateUser = async (userId, userData) => {\r\n  try {\r\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users/${userId}`, {\r\n      method: 'PUT',\r\n      headers: {\r\n        'Content-Type': 'application/json',\r\n        Authorization: `${useCookie(\"token\").value}`\r\n      },\r\n      body: JSON.stringify(userData)\r\n    });\r\n    if (!response.ok) {\r\n      throw new Error('Failed to update user');\r\n    }\r\n    const updatedUser = await response.json();\r\n    return updatedUser;\r\n  } catch (error) {\r\n    console.error('Error updating user:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\nexport const deleteUsers = async (selectedUserIds) => {\r\n  try {\r\n    console.log(typeof(selectedUserIds))\r\n    console.log(selectedUserIds)\r\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\r\n      method: \"DELETE\",\r\n      headers: {\r\n        Authorization: `${useCookie(\"token\").value}`,\r\n        \"Content-Type\": \"application/json\",\r\n      },\r\n      body: JSON.stringify({\r\n        \"userIds\": selectedUserIds\r\n      }),\r\n    });\r\n    if (!response.ok) {\r\n      throw new Error('Failed to delete users');\r\n    }\r\n    const data = await response.json();\r\n    return data;\r\n  } catch (error) {\r\n    console.error('Error deleting users:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\nexport const formatGroups = (users) => {\r\n  users.forEach(user => {\r\n    user.groups = user.groups.map(group => group.full_name).join(', ');\r\n  });\r\n  return users;\r\n};"
+        ],
+        "mappings": "AAAA,MAAM,gBAAgB,iBAAiB;AAChC,aAAM,aAAa,YAAY;AACpC,MAAI;AACF,UAAM,WAAW,MAAM,MAAM,GAAG,cAAc,OAAO,OAAO,UAAU;AAAA,MACpE,SAAS;AAAA,QACP,eAAe,GAAG,UAAU,OAAO,EAAE,KAAK;AAAA,MAC5C;AAAA,IACF,CAAC;AACD,QAAI,CAAC,SAAS,IAAI;AAChB,YAAM,IAAI,MAAM,uBAAuB;AAAA,IACzC;AACA,UAAM,OAAO,MAAM,SAAS,KAAK;AACjC,WAAO;AAAA,EACT,SAAS,OAAO;AACd,YAAQ,MAAM,yBAAyB,KAAK;AAC5C,UAAM;AAAA,EACR;AACF;AAEO,aAAM,aAAa,OAAO,aAAa;AAC5C,MAAI;AACF,UAAM,WAAW,MAAM,MAAM,GAAG,cAAc,OAAO,OAAO,UAAU;AAAA,MACpE,QAAQ;AAAA,MACR,SAAS;AAAA,QACP,gBAAgB;AAAA,QAChB,eAAe,GAAG,UAAU,OAAO,EAAE,KAAK;AAAA,MAC5C;AAAA,MACA,MAAM,KAAK,UAAU,QAAQ;AAAA,IAC/B,CAAC;AACD,QAAI,CAAC,SAAS,IAAI;AAChB,YAAM,IAAI,MAAM,uBAAuB;AAAA,IACzC;AACA,UAAM,OAAO,MAAM,SAAS,KAAK;AACjC,WAAO;AAAA,EACT,SAAS,OAAO;AACd,YAAQ,MAAM,wBAAwB,KAAK;AAC3C,UAAM;AAAA,EACR;AACF;AAEO,aAAM,aAAa,OAAO,QAAQ,aAAa;AACpD,MAAI;AACF,UAAM,WAAW,MAAM,MAAM,GAAG,cAAc,OAAO,OAAO,UAAU,MAAM,IAAI;AAAA,MAC9E,QAAQ;AAAA,MACR,SAAS;AAAA,QACP,gBAAgB;AAAA,QAChB,eAAe,GAAG,UAAU,OAAO,EAAE,KAAK;AAAA,MAC5C;AAAA,MACA,MAAM,KAAK,UAAU,QAAQ;AAAA,IAC/B,CAAC;AACD,QAAI,CAAC,SAAS,IAAI;AAChB,YAAM,IAAI,MAAM,uBAAuB;AAAA,IACzC;AACA,UAAM,cAAc,MAAM,SAAS,KAAK;AACxC,WAAO;AAAA,EACT,SAAS,OAAO;AACd,YAAQ,MAAM,wBAAwB,KAAK;AAC3C,UAAM;AAAA,EACR;AACF;AAEO,aAAM,cAAc,OAAO,oBAAoB;AACpD,MAAI;AACF,YAAQ,IAAI,OAAO,eAAgB;AACnC,YAAQ,IAAI,eAAe;AAC3B,UAAM,WAAW,MAAM,MAAM,GAAG,cAAc,OAAO,OAAO,UAAU;AAAA,MACpE,QAAQ;AAAA,MACR,SAAS;AAAA,QACP,eAAe,GAAG,UAAU,OAAO,EAAE,KAAK;AAAA,QAC1C,gBAAgB;AAAA,MAClB;AAAA,MACA,MAAM,KAAK,UAAU;AAAA,QACnB,WAAW;AAAA,MACb,CAAC;AAAA,IACH,CAAC;AACD,QAAI,CAAC,SAAS,IAAI;AAChB,YAAM,IAAI,MAAM,wBAAwB;AAAA,IAC1C;AACA,UAAM,OAAO,MAAM,SAAS,KAAK;AACjC,WAAO;AAAA,EACT,SAAS,OAAO;AACd,YAAQ,MAAM,yBAAyB,KAAK;AAC5C,UAAM;AAAA,EACR;AACF;AAEO,aAAM,eAAe,CAAC,UAAU;AACrC,QAAM,QAAQ,UAAQ;AACpB,SAAK,SAAS,KAAK,OAAO,IAAI,WAAS,MAAM,SAAS,EAAE,KAAK,IAAI;AAAA,EACnE,CAAC;AACD,SAAO;AACT;",
+        "names": []
+      }
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794738493,
+      "end": 1715794738493,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794738493,
+      "end": 1715794738493,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1715794738493,
+      "end": 1715794738493,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794738493,
+      "end": 1715794738493,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794738494,
+      "end": 1715794738494,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794738494,
+      "end": 1715794738494,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794738494,
+      "end": 1715794738494,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794738494,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794738496,
+      "end": 1715794738496,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794738496,
+      "end": 1715794738496,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794738496,
+      "end": 1715794738496,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794738496,
+      "end": 1715794738496,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794738496,
+      "end": 1715794738500,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "result": "import { useRuntimeConfig } from '#app/nuxt';\nimport { useCookie } from '#app/composables/cookie';\nconst runtimeConfig = useRuntimeConfig();\nexport const fetchUsers = async () => {\n  try {\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\n      headers: {\n        Authorization: `${useCookie(\"token\").value}`\n      }\n    });\n    if (!response.ok) {\n      throw new Error(\"Failed to fetch users\");\n    }\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error(\"Error fetching users:\", error);\n    throw error;\n  }\n};\nexport const createUser = async (userData) => {\n  try {\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\n      method: \"POST\",\n      headers: {\n        \"Content-Type\": \"application/json\",\n        Authorization: `${useCookie(\"token\").value}`\n      },\n      body: JSON.stringify(userData)\n    });\n    if (!response.ok) {\n      throw new Error(\"Failed to create user\");\n    }\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error(\"Error creating user:\", error);\n    throw error;\n  }\n};\nexport const updateUser = async (userId, userData) => {\n  try {\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users/${userId}`, {\n      method: \"PUT\",\n      headers: {\n        \"Content-Type\": \"application/json\",\n        Authorization: `${useCookie(\"token\").value}`\n      },\n      body: JSON.stringify(userData)\n    });\n    if (!response.ok) {\n      throw new Error(\"Failed to update user\");\n    }\n    const updatedUser = await response.json();\n    return updatedUser;\n  } catch (error) {\n    console.error(\"Error updating user:\", error);\n    throw error;\n  }\n};\nexport const deleteUsers = async (selectedUserIds) => {\n  try {\n    console.log(typeof selectedUserIds);\n    console.log(selectedUserIds);\n    const response = await fetch(`${runtimeConfig.public.apiBase}/users`, {\n      method: \"DELETE\",\n      headers: {\n        Authorization: `${useCookie(\"token\").value}`,\n        \"Content-Type\": \"application/json\"\n      },\n      body: JSON.stringify({\n        \"userIds\": selectedUserIds\n      })\n    });\n    if (!response.ok) {\n      throw new Error(\"Failed to delete users\");\n    }\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error(\"Error deleting users:\", error);\n    throw error;\n  }\n};\nexport const formatGroups = (users) => {\n  users.forEach((user) => {\n    user.groups = user.groups.map((group) => group.full_name).join(\", \");\n  });\n  return users;\n};\n",
+      "start": 1715794738500,
+      "end": 1715794738520,
+      "order": "post",
+      "sourcemaps": {
+        "version": 3,
+        "sources": [
+          ""
+        ],
+        "names": [],
+        "mappings": ";;AAAA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACzC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC3E,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACpD,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC/C,CAAC,CAAC,CAAC,CAAC,CAAC;AACL,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACnB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAClD,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC;AACH,CAAC,CAAC;AACF,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC/C,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC3E,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACrB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC3C,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACpD,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACR,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACpC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC/C,CAAC,CAAC,CAAC,CAAC,CAAC;AACL,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACnB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACjD,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC;AACH,CAAC,CAAC;AACF,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvD,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACrF,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACpB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC3C,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACpD,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACR,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACpC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC/C,CAAC,CAAC,CAAC,CAAC,CAAC;AACL,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC9C,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACnB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACjD,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC;AACH,CAAC,CAAC;AACF,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvD,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACxC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACjC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC3E,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAChB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CA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"
+      }
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794738520,
+      "end": 1715794738520,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794738521,
+      "end": 1715794738521,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794738521,
+      "end": 1715794738521,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794738521,
+      "end": 1715794738521,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794738522,
+      "end": 1715794738522,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794738522,
+      "end": 1715794738522,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794738522,
+      "end": 1715794738523,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794738523,
+      "end": 1715794738523,
+      "order": "normal"
+    }
+  ]
+}

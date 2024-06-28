@@ -1,0 +1,214 @@
+{
+  "resolvedId": "E:/Stusy/web-client/pages/course/[id].vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\n\r\nimport type {Ref} from \"vue\";\r\n\r\ndefinePageMeta({layout: 'home'});\r\n\r\nconst runtimeConfig = useRuntimeConfig();\r\nconst route = useRoute()\r\nconst token = useCookie('token')\r\n\r\nimport AwTabsWrapper from \"~/components/ui-kit/AwTabsWrapper.vue\";\r\nimport AwTab from \"~/components/ui-kit/AwTab.vue\";\r\n\r\n\r\ninterface Course {\r\n  // Define the properties of a chapter\r\n  id: number;\r\n  image_url: string;\r\n  name: string;\r\n  description: string;\r\n  starts_at: string;\r\n  ends_at: string;\r\n  chapters: Chapter[];\r\n}\r\n\r\ninterface Material {\r\n  name: string;\r\n  url: string;\r\n}\r\n\r\ninterface Chapter {\r\n  name: string;\r\n  description: string;\r\n  materials: Material[];\r\n  unlocks_at: string;\r\n}\r\n\r\nlet course: Ref<Course> = ref({\r\n  id: 0,\r\n  image_url: '',\r\n  name: '',\r\n  description: '',\r\n  starts_at: '',\r\n  ends_at: '',\r\n  chapters: []\r\n});\r\nlet chapters: Ref<Chapter[]> = ref([]);\r\nlet chaptersTab: Ref<boolean[]> = ref([]);\r\nlet error: Ref<string> = ref('')\r\n\r\nfunction videoId(videoUrl: string): string {\r\n  try {\r\n    const params: URLSearchParams = new URLSearchParams(new URL(videoUrl).search);\r\n    return params.get('v') ?? '';\r\n  } catch (error) {\r\n    console.error(`Ошибка извлечения данных из ссылки ${error}`);\r\n    return '';\r\n  }\r\n}\r\n\r\nfunction getCourses(): void {\r\n  fetch(`${runtimeConfig.public.apiBase}/courses/${route.params.id}`, {\r\n    headers: {\r\n      'Authorization': token.value || '',\r\n    },\r\n  }).then((response: Response) => {\r\n    switch (response.status) {\r\n      case 400:\r\n        break;\r\n    }\r\n    return response.json();\r\n  }).then((data: Course) => {\r\n    course.value = data;\r\n    useHead({\r\n      title: course.value.name,\r\n    });\r\n    if (data.chapters === undefined) {\r\n      error.value = 'В курсе отсутствует контент'\r\n      return\r\n    }\r\n    // реверс массива\r\n    try {\r\n      chapters.value = course.value.chapters.reverse();\r\n    } catch (e) {\r\n      console.error(e)\r\n    }\r\n  }).catch((err: Error) => {\r\n    console.error('Невозможно отправить запрос', err);\r\n  });\r\n}\r\n\r\nonMounted(() => {\r\n  getCourses();\r\n})\r\n</script>\r\n\r\n<template>\r\n  <div class=\"main-content\">\r\n    <div class=\"courses-main\" id=\"courses-main\">\r\n      <h2>{{ course.name }}</h2>\r\n      <h3 class=\"error-message\" v-if=\"error\">{{ error }}</h3>\r\n      <div class=\"chapter\" v-for=\"(chapter,id) in chapters\">\r\n        <div class=\"chapterHeader\" @click=\"chaptersTab[id]=!chaptersTab[id]\">\r\n          <img v-if=\"chapter.name\" src=\"@/assets/imgs/arrow.svg\" alt=\"Свернуть\"\r\n               :style=\"[chaptersTab[id]?'transform:rotate(-90deg); transition:.1s':'']\"\r\n          />\r\n          <h3>{{ chapter.name }}</h3>\r\n        </div>\r\n        <form action=\"\" v-if=\"chaptersTab[id]\">\r\n          <AwTabsWrapper>\r\n            <AwTab title=\"Описание\">\r\n              <p class=\"description\">{{ chapter.description }}</p>\r\n            </AwTab>\r\n            <AwTab title=\"Материалы\">\r\n              <div class=\"material\" v-for=\"material in chapter.materials\">\r\n                <a v-bind:href=\"`${runtimeConfig.public.domainName}${material.url}`\">{{ material.name }}</a>\r\n              </div>\r\n            </AwTab>\r\n            <AwTab title=\"Видео\">\r\n              <div v-for=\"video in chapter.materials\">\r\n                <iframe v-if=\"video.url.includes('youtube.com/watch?v=')\"\r\n                        width=\"560\" height=\"315\" :src=\"`https://www.youtube.com/embed/${videoId(video.url)}`\"\r\n                        title=\"YouTube video player\"\r\n                        allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\"\r\n                        allowfullscreen></iframe>\r\n              </div>\r\n            </AwTab>\r\n          </AwTabsWrapper>\r\n        </form>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n@use '@/assets/scss/main.scss' as *;\r\n\r\n.courses-mainLeft {\r\n  word-wrap: break-word;\r\n}\r\n\r\n.description {\r\n  font-size: 16px;\r\n}\r\n\r\n.material {\r\n  display: flex;\r\n  gap: 10px;\r\n  flex-wrap: wrap;\r\n  align-items: flex-start;\r\n  justify-content: flex-start;\r\n}\r\n\r\n.chapter {\r\n  border: 1px solid $blue;\r\n  border-radius: 25px;\r\n  padding: 15px;\r\n  margin-top: 10px;\r\n}\r\n\r\n.chapterHeader {\r\n  display: flex;\r\n  gap: 10px;\r\n  align-items: center;\r\n  position: relative;\r\n  user-select: none;\r\n}\r\n\r\n.chapterHeader .close-button {\r\n  position: absolute;\r\n  right: 5px;\r\n  top: 0;\r\n}\r\n\r\nh2 {\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-size: 36px;\r\n  line-height: 41px;\r\n}\r\n\r\n.error-message {\r\n  margin: 55px;\r\n  font-weight: 400;\r\n  text-align: center;\r\n}\r\n\r\na[href$=\".pdf\"] {\r\n  padding: 20px 20px 20px 45px;\r\n  background: url(\"@/public/assets/imgs/pdf.png\") 0 center no-repeat;\r\n  background-size: 40px;\r\n}\r\n\r\na[href$=\".docx\"] {\r\n  padding: 20px 20px 20px 45px;\r\n  background-size: 10px;\r\n  background: url(\"@/public/assets/imgs/doc.png\") 0 center no-repeat;\r\n  background-size: 40px;\r\n}\r\n\r\na[href$=\".png\"] {\r\n  padding: 20px 20px 20px 45px;\r\n  background-size: 10px;\r\n  background: url(\"@/public/assets/imgs/png.png\") 0 center no-repeat;\r\n  background-size: 40px;\r\n}\r\n\r\na[href$=\".zip\"] {\r\n  padding: 20px 20px 20px 45px;\r\n  background-size: 10px;\r\n  background: url(\"@/public/assets/imgs/zip.png\") 0 center no-repeat;\r\n  background-size: 40px;\r\n}\r\n\r\na[href$=\".pptx\"] {\r\n  padding: 20px 20px 20px 45px;\r\n  background-size: 10px;\r\n  background: url(\"@/public/assets/imgs/pptx-file.png\") 0 center no-repeat;\r\n  background-size: 40px;\r\n}\r\n\r\na[href*=\"youtube.com\"] {\r\n  display: none;\r\n}\r\n</style>\r\n",
+      "start": 1715794731082,
+      "end": 1715794731295,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794731295,
+      "end": 1715794731295,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794731295,
+      "end": 1715794731295,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794731295,
+      "end": 1715794731295,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794731295,
+      "end": 1715794731295,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794731295,
+      "end": 1715794731295,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794731295,
+      "end": 1715794731295,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794731295,
+      "end": 1715794731295,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/pages/course/[id].vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/pages/course/[id].vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/pages/course/[id].vue?vue&type=style&index=0&scoped=d042d134&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-d042d134\"]]);\n",
+      "start": 1715794731295,
+      "end": 1715794731464,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794731465,
+      "end": 1715794731465,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731465,
+      "end": 1715794731473,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794731473,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794731475,
+      "end": 1715794731476,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731476,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794731478,
+      "end": 1715794731478,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794731478,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794731480,
+      "end": 1715794731480,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794731481,
+      "end": 1715794731482,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794731482,
+      "end": 1715794731482,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794731483,
+      "end": 1715794731491,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794731492,
+      "end": 1715794731492,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794731493,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794731498,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794731499,
+      "end": 1715794731499,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794731499,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794731501,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794731501,
+      "end": 1715794731503,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794731503,
+      "end": 1715794731503,
+      "order": "normal"
+    }
+  ]
+}

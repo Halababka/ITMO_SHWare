@@ -1,0 +1,214 @@
+{
+  "resolvedId": "E:/Stusy/web-client/pages/admin/index.vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\ndefinePageMeta({\r\n  layout: 'home',\r\n  middleware: [\r\n    'admin'\r\n  ]\r\n})\r\nuseHead({\r\n  title: 'Администрирование'\r\n})\r\n\r\nconst runtimeConfig = useRuntimeConfig()\r\nconst token = useCookie('token')\r\n\r\nconst sectionsData = ref([\r\n  { title: 'Группы', description: 'Перейти к работе с группами', link: '/admin/groups' },\r\n  { title: 'Пользователи', description: 'Перейти к работе с пользователями', link: '/admin/users' },\r\n  { title: 'Курсы', description: 'Перейти к работе с курсами', link: '/groups_create' },\r\n  { title: 'Роли', description: 'Перейти к работе с ролями', link: '/admin/users' },\r\n  { title: 'Категории', description: 'Перейти к работе с категориями', link: '/admin/users' },\r\n  { title: 'Файлы', description: 'Перейти к работе с файлами', link: '/admin/users' },\r\n]);\r\n</script>\r\n\r\n<template>\r\n  <div class=\"main-content admin-page\">\r\n    <section v-for=\"(section, index) in sectionsData\" :key=\"index\" class=\"admin-section\">\r\n      <h2>{{ section.title }}</h2>\r\n      <NuxtLink :to=\"section.link\" class=\"admin-link\">\r\n        {{ section.description }}\r\n      </NuxtLink>\r\n    </section>\r\n  </div>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n@use '@/assets/scss/main.scss' as *;\r\n\r\n.admin-page {\r\n  padding: 10px;\r\n}\r\n.admin-section {\r\n  padding: 20px;\r\n  border: 2px solid #ccc;\r\n  border-radius: 15px;\r\n  position: relative; /* добавлено для позиционирования подчеркивания */\r\n  @include theme('box-shadow', $shadow-color, true, 2px 0px 8px 0px);\r\n  @include theme('background', $general-background-light);\r\n}\r\n\r\n.admin-section h2 {\r\n  margin-top: 0;\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.admin-link {\r\n  display: inline-block;\r\n  padding: 8px 16px;\r\n  background-color: #007bff;\r\n  color: #fff;\r\n  text-decoration: none;\r\n  border-radius: 4px;\r\n  transition: background-color 0.3s ease;\r\n}\r\n\r\n.admin-link:hover {\r\n  background-color: #0056b3;\r\n}\r\n\r\n/* Стилизация подчеркивания */\r\n.admin-section::after {\r\n  content: '';\r\n  position: absolute;\r\n  bottom: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 2px;\r\n  background-color: #007bff; /* цвет подчеркивания */\r\n  transform: scaleX(0); /* по умолчанию подчеркивание не видно */\r\n  transition: transform 0.3s ease;\r\n}\r\n\r\n.admin-link:hover {\r\n  text-decoration: none; /* убираем стандартное подчеркивание при наведении */\r\n}\r\n\r\n.admin-link:hover ~ .admin-section::after {\r\n  transform: scaleX(0.8); /* увеличиваем подчеркивание при наведении на ссылку */\r\n}\r\n</style>",
+      "start": 1715794730918,
+      "end": 1715794731290,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794731290,
+      "end": 1715794731290,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794731291,
+      "end": 1715794731291,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794731291,
+      "end": 1715794731291,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794731291,
+      "end": 1715794731291,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/pages/admin/index.vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/pages/admin/index.vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/pages/admin/index.vue?vue&type=style&index=0&scoped=12a0644d&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-12a0644d\"]]);\n",
+      "start": 1715794731291,
+      "end": 1715794731464,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794731465,
+      "end": 1715794731465,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731473,
+      "end": 1715794731473,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794731476,
+      "end": 1715794731476,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794731478,
+      "end": 1715794731478,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794731480,
+      "end": 1715794731480,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794731481,
+      "end": 1715794731482,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794731482,
+      "end": 1715794731482,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794731484,
+      "end": 1715794731491,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794731492,
+      "end": 1715794731492,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794731498,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794731498,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794731499,
+      "end": 1715794731499,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794731501,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794731501,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794731501,
+      "end": 1715794731503,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794731503,
+      "end": 1715794731503,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "resolvedId": "E:/Stusy/web-client/pages/createMaterial.vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\n\r\nconst router = useRouter();\r\nconst materialId = ref(null);\r\nconst isEditing = ref(false);\r\n\r\nconst formData = {\r\n  title: '',\r\n  description: '',\r\n  contentType: 'text', // по умолчанию тип контента - текст\r\n  textContent: '', // содержимое текстового контента\r\n  // дополнительные поля для других типов контента\r\n};\r\n\r\nonMounted(() => {\r\n  const routeParams = router.currentRoute.value.params;\r\n  materialId.value = routeParams.id;\r\n\r\n  if (materialId.value) {\r\n    isEditing.value = true;\r\n    // Здесь можно загрузить данные существующего материала для редактирования\r\n    // fetch(`/api/materials/${materialId.value}`).then(response => {\r\n    //   if (response.ok) {\r\n    //     return response.json();\r\n    //   } else {\r\n    //     throw new Error('Ошибка при загрузке материала');\r\n    //   }\r\n    // }).then(data => {\r\n    //   formData.title = data.title;\r\n    //   formData.description = data.description;\r\n    // }).catch(error => {\r\n    //   console.error(error);\r\n    //   alert('Произошла ошибка при загрузке материала');\r\n    // });\r\n  }\r\n});\r\n\r\nconst submitForm = () => {\r\n  if (isEditing.value) {\r\n    // Логика обновления материала\r\n    // После успешного обновления материала\r\n    router.push('/course-creation');\r\n  } else {\r\n    // Логика создания нового материала\r\n    // После успешного создания материала\r\n    router.push('/course-creation');\r\n  }\r\n};\r\n\r\nconst handleFileUpload = (event) => {\r\n  const file = event.target.files[0];\r\n  // Добавьте логику для загрузки файла на сервер\r\n  // Этот код можно использовать для отправки файла на сервер\r\n  // const formData = new FormData();\r\n  // formData.append('file', file);\r\n  // fetch('/api/upload', {\r\n  //   method: 'POST',\r\n  //   body: formData\r\n  // }).then(response => {\r\n  //   if (response.ok) {\r\n  //     // Обработка успешной загрузки файла\r\n  //   } else {\r\n  //     throw new Error('Ошибка при загрузке файла');\r\n  //   }\r\n  // }).catch(error => {\r\n  //   console.error(error);\r\n  //   alert('Произошла ошибка при загрузке файла');\r\n  // });\r\n};\r\n</script>\r\n\r\n<template>\r\n  <div class=\"main-content\">\r\n    <div class=\"container mx-auto\">\r\n      <h1 class=\"text-2xl font-semibold mb-4\">{{ isEditing ? 'Редактирование' : 'Создание' }} материала</h1>\r\n      <form @submit.prevent=\"submitForm\">\r\n        <div class=\"mb-4\">\r\n          <label for=\"title\" class=\"block font-semibold\">Название:</label>\r\n          <input v-model.trim=\"formData.title\" type=\"text\" id=\"title\" class=\"mt-1 p-2 border rounded w-full\" required>\r\n        </div>\r\n        <div class=\"mb-4\">\r\n          <label for=\"description\" class=\"block font-semibold\">Описание:</label>\r\n          <textarea v-model.trim=\"formData.description\" id=\"description\" class=\"mt-1 p-2 border rounded w-full\" rows=\"4\"></textarea>\r\n        </div>\r\n        <div class=\"mb-4\">\r\n          <label for=\"content-type\" class=\"block font-semibold\">Тип контента:</label>\r\n          <select v-model=\"formData.contentType\" id=\"content-type\" class=\"mt-1 p-2 border rounded w-full\" required>\r\n            <option value=\"text\">Текст</option>\r\n            <option value=\"file\">Файл</option>\r\n            <option value=\"header\">Заголовок</option>\r\n            <option value=\"video\">Ссылка на видео</option>\r\n            <option value=\"folder\">Папка</option>\r\n          </select>\r\n        </div>\r\n        <div v-if=\"formData.contentType === 'text'\" class=\"mb-4\">\r\n          <label for=\"text-content\" class=\"block font-semibold\">Текстовый контент:</label>\r\n          <textarea v-model.trim=\"formData.textContent\" id=\"text-content\" class=\"mt-1 p-2 border rounded w-full\" rows=\"4\"></textarea>\r\n        </div>\r\n        <div v-if=\"formData.contentType === 'file'\" class=\"mb-4\">\r\n          <label for=\"file-content\" class=\"block font-semibold\">Файл:</label>\r\n          <input type=\"file\" id=\"file-content\" class=\"mt-1 p-2 border rounded w-full\" @change=\"handleFileUpload\">\r\n        </div>\r\n        <button type=\"submit\" class=\"px-4 py-2 bg-blue-500 text-white rounded\">{{ isEditing ? 'Сохранить' : 'Создать' }}</button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n@use '@/assets/scss/main.scss' as *;\r\n\r\n.main-content {\r\n  gap: 0 !important;\r\n  border-radius: 20px;\r\n  padding: 20px;\r\n  @include theme('background', $general-background-light);\r\n}\r\n</style>",
+      "start": 1715794731184,
+      "end": 1715794731300,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794731300,
+      "end": 1715794731300,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794731300,
+      "end": 1715794731300,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794731300,
+      "end": 1715794731300,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794731300,
+      "end": 1715794731300,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794731300,
+      "end": 1715794731300,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794731300,
+      "end": 1715794731300,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794731300,
+      "end": 1715794731300,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/pages/createMaterial.vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/pages/createMaterial.vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/pages/createMaterial.vue?vue&type=style&index=0&scoped=3c39076d&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-3c39076d\"]]);\n",
+      "start": 1715794731300,
+      "end": 1715794731464,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794731465,
+      "end": 1715794731465,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731473,
+      "end": 1715794731473,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794731475,
+      "end": 1715794731476,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731476,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794731478,
+      "end": 1715794731478,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794731480,
+      "end": 1715794731480,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794731481,
+      "end": 1715794731482,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794731482,
+      "end": 1715794731482,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794731484,
+      "end": 1715794731491,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794731492,
+      "end": 1715794731492,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794731497,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794731498,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794731499,
+      "end": 1715794731499,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794731500,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794731501,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794731501,
+      "end": 1715794731503,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794731503,
+      "end": 1715794731503,
+      "order": "normal"
+    }
+  ]
+}

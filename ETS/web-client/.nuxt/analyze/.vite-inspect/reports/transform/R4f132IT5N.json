@@ -1,0 +1,221 @@
+{
+  "resolvedId": "E:/Stusy/web-client/components/ui-kit/AwModal.vue?vue&type=script&setup=true&lang.ts",
+  "transforms": [
+    {
+      "name": "vite:vue",
+      "result": "import { defineComponent as _defineComponent } from 'vue'\nimport { createElementVNode as _createElementVNode, toDisplayString as _toDisplayString, renderSlot as _renderSlot, withModifiers as _withModifiers, Transition as _Transition, withCtx as _withCtx, createVNode as _createVNode, vShow as _vShow, withDirectives as _withDirectives, openBlock as _openBlock, createBlock as _createBlock, pushScopeId as _pushScopeId, popScopeId as _popScopeId } from \"vue\"\n\nconst _withScopeId = n => (_pushScopeId(\"data-v-baeba4e0\"),n=n(),_popScopeId(),n)\nconst _hoisted_1 = { style: {\"margin-bottom\":\"16px\",\"font-size\":\"1.5rem\"} }\n\nimport AwButton from \"~/components/ui-kit/AwButton.vue\"\r\n\r\n\nexport default /*#__PURE__*/_defineComponent({\n  __name: 'AwModal',\n  props: {\r\n  title: String,\r\n  modalActive: {\r\n    type: Boolean,\r\n  }\r\n},\n  emits: ['close'],\n  setup(__props, { emit: __emit }) {\n\r\n\r\nconst props = __props\r\n\r\nconst emit = __emit\r\n\r\nconst close = () => {\r\n  emit(\"close\")\r\n}\r\n\r\n\nreturn (_ctx: any,_cache: any) => {\n  return (_openBlock(), _createBlock(_Transition, { name: \"modal-animation\" }, {\n    default: _withCtx(() => [\n      _withDirectives(_createElementVNode(\"div\", {\n        class: \"modal\",\n        onClick: close\n      }, [\n        _createVNode(_Transition, { name: \"modal-animation-inner\" }, {\n          default: _withCtx(() => [\n            _createElementVNode(\"div\", {\n              class: \"modal-inner\",\n              onClick: _cache[0] || (_cache[0] = _withModifiers(() => {}, [\"stop\"]))\n            }, [\n              _createElementVNode(\"div\", {\n                onClick: close,\n                class: \"icon-close close-button\",\n                style: {\"cursor\":\"pointer\"}\n              }),\n              _createElementVNode(\"h2\", _hoisted_1, _toDisplayString(props.title), 1),\n              _renderSlot(_ctx.$slots, \"default\", {}, undefined, true)\n            ])\n          ]),\n          _: 3\n        })\n      ], 512), [\n        [_vShow, __props.modalActive]\n      ])\n    ]),\n    _: 3\n  }))\n}\n}\n\n})",
+      "start": 1715794738255,
+      "end": 1715794738255
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794738256,
+      "end": 1715794738256,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794738256,
+      "end": 1715794738256,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794738256,
+      "end": 1715794738256,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794738256,
+      "end": 1715794738256,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "result": "import { defineComponent as _defineComponent } from \"vue\";\nimport { createElementVNode as _createElementVNode, toDisplayString as _toDisplayString, renderSlot as _renderSlot, withModifiers as _withModifiers, Transition as _Transition, withCtx as _withCtx, createVNode as _createVNode, vShow as _vShow, withDirectives as _withDirectives, openBlock as _openBlock, createBlock as _createBlock, pushScopeId as _pushScopeId, popScopeId as _popScopeId } from \"vue\";\nconst _withScopeId = (n) => (_pushScopeId(\"data-v-baeba4e0\"), n = n(), _popScopeId(), n);\nconst _hoisted_1 = { style: { \"margin-bottom\": \"16px\", \"font-size\": \"1.5rem\" } };\nexport default /* @__PURE__ */ _defineComponent({\n  __name: \"AwModal\",\n  props: {\n    title: String,\n    modalActive: {\n      type: Boolean\n    }\n  },\n  emits: [\"close\"],\n  setup(__props, { emit: __emit }) {\n    const props = __props;\n    const emit = __emit;\n    const close = () => {\n      emit(\"close\");\n    };\n    return (_ctx, _cache) => {\n      return _openBlock(), _createBlock(_Transition, { name: \"modal-animation\" }, {\n        default: _withCtx(() => [\n          _withDirectives(_createElementVNode(\"div\", {\n            class: \"modal\",\n            onClick: close\n          }, [\n            _createVNode(_Transition, { name: \"modal-animation-inner\" }, {\n              default: _withCtx(() => [\n                _createElementVNode(\"div\", {\n                  class: \"modal-inner\",\n                  onClick: _cache[0] || (_cache[0] = _withModifiers(() => {\n                  }, [\"stop\"]))\n                }, [\n                  _createElementVNode(\"div\", {\n                    onClick: close,\n                    class: \"icon-close close-button\",\n                    style: { \"cursor\": \"pointer\" }\n                  }),\n                  _createElementVNode(\"h2\", _hoisted_1, _toDisplayString(props.title), 1),\n                  _renderSlot(_ctx.$slots, \"default\", {}, void 0, true)\n                ])\n              ]),\n              _: 3\n            })\n          ], 512), [\n            [_vShow, __props.modalActive]\n          ])\n        ]),\n        _: 3\n      });\n    };\n  }\n});\n",
+      "start": 1715794738258,
+      "end": 1715794738493,
+      "order": "normal",
+      "sourcemaps": {
+        "version": 3,
+        "sources": [
+          "E:/Stusy/web-client/components/ui-kit/AwModal.vue?vue&type=script&setup=true&lang.ts"
+        ],
+        "sourcesContent": [
+          "import { defineComponent as _defineComponent } from 'vue'\nimport { createElementVNode as _createElementVNode, toDisplayString as _toDisplayString, renderSlot as _renderSlot, withModifiers as _withModifiers, Transition as _Transition, withCtx as _withCtx, createVNode as _createVNode, vShow as _vShow, withDirectives as _withDirectives, openBlock as _openBlock, createBlock as _createBlock, pushScopeId as _pushScopeId, popScopeId as _popScopeId } from \"vue\"\n\nconst _withScopeId = n => (_pushScopeId(\"data-v-baeba4e0\"),n=n(),_popScopeId(),n)\nconst _hoisted_1 = { style: {\"margin-bottom\":\"16px\",\"font-size\":\"1.5rem\"} }\n\nimport AwButton from \"~/components/ui-kit/AwButton.vue\"\r\n\r\n\nexport default /*#__PURE__*/_defineComponent({\n  __name: 'AwModal',\n  props: {\r\n  title: String,\r\n  modalActive: {\r\n    type: Boolean,\r\n  }\r\n},\n  emits: ['close'],\n  setup(__props, { emit: __emit }) {\n\r\n\r\nconst props = __props\r\n\r\nconst emit = __emit\r\n\r\nconst close = () => {\r\n  emit(\"close\")\r\n}\r\n\r\n\nreturn (_ctx: any,_cache: any) => {\n  return (_openBlock(), _createBlock(_Transition, { name: \"modal-animation\" }, {\n    default: _withCtx(() => [\n      _withDirectives(_createElementVNode(\"div\", {\n        class: \"modal\",\n        onClick: close\n      }, [\n        _createVNode(_Transition, { name: \"modal-animation-inner\" }, {\n          default: _withCtx(() => [\n            _createElementVNode(\"div\", {\n              class: \"modal-inner\",\n              onClick: _cache[0] || (_cache[0] = _withModifiers(() => {}, [\"stop\"]))\n            }, [\n              _createElementVNode(\"div\", {\n                onClick: close,\n                class: \"icon-close close-button\",\n                style: {\"cursor\":\"pointer\"}\n              }),\n              _createElementVNode(\"h2\", _hoisted_1, _toDisplayString(props.title), 1),\n              _renderSlot(_ctx.$slots, \"default\", {}, undefined, true)\n            ])\n          ]),\n          _: 3\n        })\n      ], 512), [\n        [_vShow, __props.modalActive]\n      ])\n    ]),\n    _: 3\n  }))\n}\n}\n\n})"
+        ],
+        "mappings": "AAAA,SAAS,mBAAmB,wBAAwB;AACpD,SAAS,sBAAsB,qBAAqB,mBAAmB,kBAAkB,cAAc,aAAa,iBAAiB,gBAAgB,cAAc,aAAa,WAAW,UAAU,eAAe,cAAc,SAAS,QAAQ,kBAAkB,iBAAiB,aAAa,YAAY,eAAe,cAAc,eAAe,cAAc,cAAc,mBAAmB;AAE1Y,MAAM,eAAe,QAAM,aAAa,iBAAiB,GAAE,IAAE,EAAE,GAAE,YAAY,GAAE;AAC/E,MAAM,aAAa,EAAE,OAAO,EAAC,iBAAgB,QAAO,aAAY,SAAQ,EAAE;AAK1E,eAA4B,iCAAiB;AAAA,EAC3C,QAAQ;AAAA,EACR,OAAO;AAAA,IACP,OAAO;AAAA,IACP,aAAa;AAAA,MACX,MAAM;AAAA,IACR;AAAA,EACF;AAAA,EACE,OAAO,CAAC,OAAO;AAAA,EACf,MAAM,SAAS,EAAE,MAAM,OAAO,GAAG;AAGnC,UAAM,QAAQ;AAEd,UAAM,OAAO;AAEb,UAAM,QAAQ,MAAM;AAClB,WAAK,OAAO;AAAA,IACd;AAGA,WAAO,CAAC,MAAU,WAAgB;AAChC,aAAQ,WAAW,GAAG,aAAa,aAAa,EAAE,MAAM,kBAAkB,GAAG;AAAA,QAC3E,SAAS,SAAS,MAAM;AAAA,UACtB,gBAAgB,oBAAoB,OAAO;AAAA,YACzC,OAAO;AAAA,YACP,SAAS;AAAA,UACX,GAAG;AAAA,YACD,aAAa,aAAa,EAAE,MAAM,wBAAwB,GAAG;AAAA,cAC3D,SAAS,SAAS,MAAM;AAAA,gBACtB,oBAAoB,OAAO;AAAA,kBACzB,OAAO;AAAA,kBACP,SAAS,OAAO,CAAC,MAAM,OAAO,CAAC,IAAI,eAAe,MAAM;AAAA,kBAAC,GAAG,CAAC,MAAM,CAAC;AAAA,gBACtE,GAAG;AAAA,kBACD,oBAAoB,OAAO;AAAA,oBACzB,SAAS;AAAA,oBACT,OAAO;AAAA,oBACP,OAAO,EAAC,UAAS,UAAS;AAAA,kBAC5B,CAAC;AAAA,kBACD,oBAAoB,MAAM,YAAY,iBAAiB,MAAM,KAAK,GAAG,CAAC;AAAA,kBACtE,YAAY,KAAK,QAAQ,WAAW,CAAC,GAAG,QAAW,IAAI;AAAA,gBACzD,CAAC;AAAA,cACH,CAAC;AAAA,cACD,GAAG;AAAA,YACL,CAAC;AAAA,UACH,GAAG,GAAG,GAAG;AAAA,YACP,CAAC,QAAQ,QAAQ,WAAW;AAAA,UAC9B,CAAC;AAAA,QACH,CAAC;AAAA,QACD,GAAG;AAAA,MACL,CAAC;AAAA,IACH;AAAA,EACA;AAEA,CAAC;",
+        "names": []
+      }
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794738493,
+      "end": 1715794738493,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794738493,
+      "end": 1715794738493,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1715794738493,
+      "end": 1715794738493,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794738493,
+      "end": 1715794738493,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794738494,
+      "end": 1715794738494,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794738494,
+      "end": 1715794738494,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794738494,
+      "end": 1715794738494,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794738494,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794738495,
+      "end": 1715794738495,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794738496,
+      "end": 1715794738496,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794738496,
+      "end": 1715794738496,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794738496,
+      "end": 1715794738496,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794738496,
+      "end": 1715794738496,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794738496,
+      "end": 1715794738500,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794738500,
+      "end": 1715794738520,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794738520,
+      "end": 1715794738520,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794738521,
+      "end": 1715794738521,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794738521,
+      "end": 1715794738521,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794738521,
+      "end": 1715794738521,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794738522,
+      "end": 1715794738522,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794738522,
+      "end": 1715794738522,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794738522,
+      "end": 1715794738523,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794738523,
+      "end": 1715794738523,
+      "order": "normal"
+    }
+  ]
+}

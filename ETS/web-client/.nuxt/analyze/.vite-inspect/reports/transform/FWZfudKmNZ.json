@@ -1,0 +1,231 @@
+{
+  "resolvedId": "E:/Stusy/web-client/pages/home.vue?vue&type=script&setup=true&lang.ts",
+  "transforms": [
+    {
+      "name": "vite:vue",
+      "result": "import { withAsyncContext as _withAsyncContext, defineComponent as _defineComponent } from 'vue'\nimport { unref as _unref, normalizeClass as _normalizeClass, createVNode as _createVNode, openBlock as _openBlock, createElementBlock as _createElementBlock, pushScopeId as _pushScopeId, popScopeId as _popScopeId } from \"vue\"\n\nconst _withScopeId = n => (_pushScopeId(\"data-v-09313d20\"),n=n(),_popScopeId(),n)\nconst _hoisted_1 = { class: \"main-content\" }\n\nimport WeatherWidget from \"~/components/widgets/WeatherWidget.vue\";\r\nimport HomeWidget from \"~/components/widgets/HomeWidget.vue\";\r\nimport CoursesWidget from \"~/components/widgets/CoursesWidget.vue\";\r\nimport CalendarWidget from \"~/components/widgets/CalendarWidget.vue\";\r\nimport LibraryWidget from \"~/components/widgets/LibraryWidget.vue\";\r\nimport {useUser} from \"~/composables/user\";\r\n\r\n\nexport default /*#__PURE__*/_defineComponent({\n  __name: 'home',\n  async setup(__props) {\n\nlet __temp: any, __restore: any\n\r\ndefinePageMeta({layout: 'home'})\r\nuseHead({\r\n  title: 'Домашняя'\r\n})\r\n\r\nconst user = ((\n  ([__temp,__restore] = _withAsyncContext(() => useUser())),\n  __temp = await __temp,\n  __restore(),\n  __temp\n)).value\r\nconst nuxtApp = useNuxtApp()\r\nconst runtimeConfig = useRuntimeConfig()\r\nconst courses = ((\n  ([__temp,__restore] = _withAsyncContext(() => useCourses())),\n  __temp = await __temp,\n  __restore(),\n  __temp\n)).value\r\nconst notification = ((\n  ([__temp,__restore] = _withAsyncContext(() => useNotification())),\n  __temp = await __temp,\n  __restore(),\n  __temp\n)).value\r\n\r\nonMounted(() => {\r\n  courses.refresh()\r\n  notification.refresh()\r\n})\r\n// const {courses, pending, error} = nuxtApp.$courses\r\n\r\n// watchEffect(() => {\r\n//   if (!pending.value) {\r\n//     if (courses.value.length > 0) {\r\n//       coursesSwitch.value = true;\r\n//     }\r\n//   }\r\n// })\r\n\nreturn (_ctx: any,_cache: any) => {\n  return (_openBlock(), _createElementBlock(\"div\", _hoisted_1, [\n    _createVNode(CoursesWidget, {\n      class: _normalizeClass([\"white-box block courses TwoFor\", _unref(user).pending?'skeleton':''])\n    }, null, 8, [\"class\"]),\n    _createVNode(WeatherWidget, { class: \"block TwoTwo\" })\n  ]))\n}\n}\n\n})",
+      "start": 1715794732559,
+      "end": 1715794732559
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794732559,
+      "end": 1715794732559,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794732559,
+      "end": 1715794732559,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794732559,
+      "end": 1715794732559,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794732560,
+      "end": 1715794732560,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "result": "import { withAsyncContext as _withAsyncContext, defineComponent as _defineComponent } from \"vue\";\nimport { unref as _unref, normalizeClass as _normalizeClass, createVNode as _createVNode, openBlock as _openBlock, createElementBlock as _createElementBlock, pushScopeId as _pushScopeId, popScopeId as _popScopeId } from \"vue\";\nconst _withScopeId = (n) => (_pushScopeId(\"data-v-09313d20\"), n = n(), _popScopeId(), n);\nconst _hoisted_1 = { class: \"main-content\" };\nimport WeatherWidget from \"~/components/widgets/WeatherWidget.vue\";\nimport CoursesWidget from \"~/components/widgets/CoursesWidget.vue\";\nimport { useUser } from \"~/composables/user\";\nexport default /* @__PURE__ */ _defineComponent({\n  __name: \"home\",\n  async setup(__props) {\n    let __temp, __restore;\n    definePageMeta({ layout: \"home\" });\n    useHead({\n      title: \"Домашняя\"\n    });\n    const user = ([__temp, __restore] = _withAsyncContext(() => useUser()), __temp = await __temp, __restore(), __temp).value;\n    const nuxtApp = useNuxtApp();\n    const runtimeConfig = useRuntimeConfig();\n    const courses = ([__temp, __restore] = _withAsyncContext(() => useCourses()), __temp = await __temp, __restore(), __temp).value;\n    const notification = ([__temp, __restore] = _withAsyncContext(() => useNotification()), __temp = await __temp, __restore(), __temp).value;\n    onMounted(() => {\n      courses.refresh();\n      notification.refresh();\n    });\n    return (_ctx, _cache) => {\n      return _openBlock(), _createElementBlock(\"div\", _hoisted_1, [\n        _createVNode(CoursesWidget, {\n          class: _normalizeClass([\"white-box block courses TwoFor\", _unref(user).pending ? \"skeleton\" : \"\"])\n        }, null, 8, [\"class\"]),\n        _createVNode(WeatherWidget, { class: \"block TwoTwo\" })\n      ]);\n    };\n  }\n});\n",
+      "start": 1715794732560,
+      "end": 1715794737027,
+      "order": "normal",
+      "sourcemaps": {
+        "version": 3,
+        "sources": [
+          "E:/Stusy/web-client/pages/home.vue?vue&type=script&setup=true&lang.ts"
+        ],
+        "sourcesContent": [
+          "import { withAsyncContext as _withAsyncContext, defineComponent as _defineComponent } from 'vue'\nimport { unref as _unref, normalizeClass as _normalizeClass, createVNode as _createVNode, openBlock as _openBlock, createElementBlock as _createElementBlock, pushScopeId as _pushScopeId, popScopeId as _popScopeId } from \"vue\"\n\nconst _withScopeId = n => (_pushScopeId(\"data-v-09313d20\"),n=n(),_popScopeId(),n)\nconst _hoisted_1 = { class: \"main-content\" }\n\nimport WeatherWidget from \"~/components/widgets/WeatherWidget.vue\";\r\nimport HomeWidget from \"~/components/widgets/HomeWidget.vue\";\r\nimport CoursesWidget from \"~/components/widgets/CoursesWidget.vue\";\r\nimport CalendarWidget from \"~/components/widgets/CalendarWidget.vue\";\r\nimport LibraryWidget from \"~/components/widgets/LibraryWidget.vue\";\r\nimport {useUser} from \"~/composables/user\";\r\n\r\n\nexport default /*#__PURE__*/_defineComponent({\n  __name: 'home',\n  async setup(__props) {\n\nlet __temp: any, __restore: any\n\r\ndefinePageMeta({layout: 'home'})\r\nuseHead({\r\n  title: 'Домашняя'\r\n})\r\n\r\nconst user = ((\n  ([__temp,__restore] = _withAsyncContext(() => useUser())),\n  __temp = await __temp,\n  __restore(),\n  __temp\n)).value\r\nconst nuxtApp = useNuxtApp()\r\nconst runtimeConfig = useRuntimeConfig()\r\nconst courses = ((\n  ([__temp,__restore] = _withAsyncContext(() => useCourses())),\n  __temp = await __temp,\n  __restore(),\n  __temp\n)).value\r\nconst notification = ((\n  ([__temp,__restore] = _withAsyncContext(() => useNotification())),\n  __temp = await __temp,\n  __restore(),\n  __temp\n)).value\r\n\r\nonMounted(() => {\r\n  courses.refresh()\r\n  notification.refresh()\r\n})\r\n// const {courses, pending, error} = nuxtApp.$courses\r\n\r\n// watchEffect(() => {\r\n//   if (!pending.value) {\r\n//     if (courses.value.length > 0) {\r\n//       coursesSwitch.value = true;\r\n//     }\r\n//   }\r\n// })\r\n\nreturn (_ctx: any,_cache: any) => {\n  return (_openBlock(), _createElementBlock(\"div\", _hoisted_1, [\n    _createVNode(CoursesWidget, {\n      class: _normalizeClass([\"white-box block courses TwoFor\", _unref(user).pending?'skeleton':''])\n    }, null, 8, [\"class\"]),\n    _createVNode(WeatherWidget, { class: \"block TwoTwo\" })\n  ]))\n}\n}\n\n})"
+        ],
+        "mappings": "AAAA,SAAS,oBAAoB,mBAAmB,mBAAmB,wBAAwB;AAC3F,SAAS,SAAS,QAAQ,kBAAkB,iBAAiB,eAAe,cAAc,aAAa,YAAY,sBAAsB,qBAAqB,eAAe,cAAc,cAAc,mBAAmB;AAE5N,MAAM,eAAe,QAAM,aAAa,iBAAiB,GAAE,IAAE,EAAE,GAAE,YAAY,GAAE;AAC/E,MAAM,aAAa,EAAE,OAAO,eAAe;AAE3C,OAAO,mBAAmB;AAE1B,OAAO,mBAAmB;AAG1B,SAAQ,eAAc;AAGtB,eAA4B,iCAAiB;AAAA,EAC3C,QAAQ;AAAA,EACR,MAAM,MAAM,SAAS;AAEvB,QAAI,QAAa;AAEjB,mBAAe,EAAC,QAAQ,OAAM,CAAC;AAC/B,YAAQ;AAAA,MACN,OAAO;AAAA,IACT,CAAC;AAED,UAAM,QACH,CAAC,QAAO,SAAS,IAAI,kBAAkB,MAAM,QAAQ,CAAC,GACvD,SAAS,MAAM,QACf,UAAU,GACV,QACC;AACH,UAAM,UAAU,WAAW;AAC3B,UAAM,gBAAgB,iBAAiB;AACvC,UAAM,WACH,CAAC,QAAO,SAAS,IAAI,kBAAkB,MAAM,WAAW,CAAC,GAC1D,SAAS,MAAM,QACf,UAAU,GACV,QACC;AACH,UAAM,gBACH,CAAC,QAAO,SAAS,IAAI,kBAAkB,MAAM,gBAAgB,CAAC,GAC/D,SAAS,MAAM,QACf,UAAU,GACV,QACC;AAEH,cAAU,MAAM;AACd,cAAQ,QAAQ;AAChB,mBAAa,QAAQ;AAAA,IACvB,CAAC;AAWD,WAAO,CAAC,MAAU,WAAgB;AAChC,aAAQ,WAAW,GAAG,oBAAoB,OAAO,YAAY;AAAA,QAC3D,aAAa,eAAe;AAAA,UAC1B,OAAO,gBAAgB,CAAC,kCAAkC,OAAO,IAAI,EAAE,UAAQ,aAAW,EAAE,CAAC;AAAA,QAC/F,GAAG,MAAM,GAAG,CAAC,OAAO,CAAC;AAAA,QACrB,aAAa,eAAe,EAAE,OAAO,eAAe,CAAC;AAAA,MACvD,CAAC;AAAA,IACH;AAAA,EACA;AAEA,CAAC;",
+        "names": []
+      }
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794737027,
+      "end": 1715794737027,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794737027,
+      "end": 1715794737027,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1715794737027,
+      "end": 1715794737027,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794737027,
+      "end": 1715794737027,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794737027,
+      "end": 1715794737028,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794737028,
+      "end": 1715794737028,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794737028,
+      "end": 1715794737028,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794737028,
+      "end": 1715794737028,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794737029,
+      "end": 1715794737029,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794737029,
+      "end": 1715794737029,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794737029,
+      "end": 1715794737029,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794737029,
+      "end": 1715794737029,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794737029,
+      "end": 1715794737029,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794737029,
+      "end": 1715794737029,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794737029,
+      "end": 1715794737029,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794737029,
+      "end": 1715794737029,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794737029,
+      "end": 1715794737030,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794737030,
+      "end": 1715794737030,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794737030,
+      "end": 1715794737030,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "result": "import { definePageMeta } from 'E:/Stusy/web-client/node_modules/nuxt/dist/pages/runtime/composables';\nimport { useHead } from '@unhead/vue';\nimport { useNuxtApp, useRuntimeConfig } from '#app/nuxt';\nimport { useCourses } from 'E:/Stusy/web-client/composables/course.js';\nimport { useNotification } from 'E:/Stusy/web-client/composables/useNotification.js';\nimport { onMounted } from 'vue';\nimport { withAsyncContext as _withAsyncContext, defineComponent as _defineComponent } from \"vue\";\nimport { unref as _unref, normalizeClass as _normalizeClass, createVNode as _createVNode, openBlock as _openBlock, createElementBlock as _createElementBlock, pushScopeId as _pushScopeId, popScopeId as _popScopeId } from \"vue\";\nconst _withScopeId = (n) => (_pushScopeId(\"data-v-09313d20\"), n = n(), _popScopeId(), n);\nconst _hoisted_1 = { class: \"main-content\" };\nimport WeatherWidget from \"~/components/widgets/WeatherWidget.vue\";\nimport CoursesWidget from \"~/components/widgets/CoursesWidget.vue\";\nimport { useUser } from \"~/composables/user\";\nexport default /* @__PURE__ */ _defineComponent({\n  __name: \"home\",\n  async setup(__props) {\n    let __temp, __restore;\n    definePageMeta({ layout: \"home\" });\n    useHead({\n      title: \"Домашняя\"\n    });\n    const user = ([__temp, __restore] = _withAsyncContext(() => useUser()), __temp = await __temp, __restore(), __temp).value;\n    const nuxtApp = useNuxtApp();\n    const runtimeConfig = useRuntimeConfig();\n    const courses = ([__temp, __restore] = _withAsyncContext(() => useCourses()), __temp = await __temp, __restore(), __temp).value;\n    const notification = ([__temp, __restore] = _withAsyncContext(() => useNotification()), __temp = await __temp, __restore(), __temp).value;\n    onMounted(() => {\n      courses.refresh();\n      notification.refresh();\n    });\n    return (_ctx, _cache) => {\n      return _openBlock(), _createElementBlock(\"div\", _hoisted_1, [\n        _createVNode(CoursesWidget, {\n          class: _normalizeClass([\"white-box block courses TwoFor\", _unref(user).pending ? \"skeleton\" : \"\"])\n        }, null, 8, [\"class\"]),\n        _createVNode(WeatherWidget, { class: \"block TwoTwo\" })\n      ]);\n    };\n  }\n});\n",
+      "start": 1715794737030,
+      "end": 1715794737044,
+      "order": "post",
+      "sourcemaps": {
+        "version": 3,
+        "sources": [
+          ""
+        ],
+        "names": [],
+        "mappings": ";;;;;;AAAA,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACjG,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAClO,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACzF,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC7C,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACnE,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACnE,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC7C,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACjD,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACjB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACxB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC1B,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACb,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACvB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC9H,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACjC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC7C,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACpI,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC9I,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACrB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACxB,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC7B,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACP,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC9B,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACnE,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACrC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC5G,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC/B,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AAC9D,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACT,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;AACN,CAAC,CAAC,CAAC;AACH,CAAC,CAAC,CAAC;"
+      }
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794737045,
+      "end": 1715794737055,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794737055,
+      "end": 1715794737057,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794737057,
+      "end": 1715794737057,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794737057,
+      "end": 1715794737057,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794737057,
+      "end": 1715794737058,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "result": "import { definePageMeta } from 'E:/Stusy/web-client/node_modules/nuxt/dist/pages/runtime/composables';\nimport { useHead } from '@unhead/vue';\nimport { useNuxtApp, useRuntimeConfig } from '#app/nuxt';\nimport { useCourses } from 'E:/Stusy/web-client/composables/course.js';\nimport { useNotification } from 'E:/Stusy/web-client/composables/useNotification.js';\nimport { onMounted } from 'vue';\nimport { withAsyncContext as _withAsyncContext, defineComponent as _defineComponent } from \"vue\";\nimport { unref as _unref, normalizeClass as _normalizeClass, createVNode as _createVNode, openBlock as _openBlock, createElementBlock as _createElementBlock, pushScopeId as _pushScopeId, popScopeId as _popScopeId } from \"vue\";\nconst _withScopeId = (n) => (_pushScopeId(\"data-v-09313d20\"), n = n(), _popScopeId(), n);\nconst _hoisted_1 = { class: \"main-content\" };\nimport WeatherWidget from \"~/components/widgets/WeatherWidget.vue\";\nimport CoursesWidget from \"~/components/widgets/CoursesWidget.vue\";\nimport { useUser } from \"~/composables/user\";\nexport default /* @__PURE__ */ _defineComponent({\n  __name: \"home\",\n  async setup(__props) {\n    let __temp, __restore;\n     false && /*@__PURE__*/ definePageMeta({ layout: \"home\" });\n    useHead({\n      title: \"Домашняя\"\n    });\n    const user = ([__temp, __restore] = _withAsyncContext(() => useUser()), __temp = await __temp, __restore(), __temp).value;\n    const nuxtApp = useNuxtApp();\n    const runtimeConfig = useRuntimeConfig();\n    const courses = ([__temp, __restore] = _withAsyncContext(() => useCourses()), __temp = await __temp, __restore(), __temp).value;\n    const notification = ([__temp, __restore] = _withAsyncContext(() => useNotification()), __temp = await __temp, __restore(), __temp).value;\n    onMounted(() => {\n      courses.refresh();\n      notification.refresh();\n    });\n    return (_ctx, _cache) => {\n      return _openBlock(), _createElementBlock(\"div\", _hoisted_1, [\n        _createVNode(CoursesWidget, {\n          class: _normalizeClass([\"white-box block courses TwoFor\", _unref(user).pending ? \"skeleton\" : \"\"])\n        }, null, 8, [\"class\"]),\n        _createVNode(WeatherWidget, { class: \"block TwoTwo\" })\n      ]);\n    };\n  }\n});\n",
+      "start": 1715794737058,
+      "end": 1715794737070,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794737070,
+      "end": 1715794737071,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794737071,
+      "end": 1715794737071,
+      "order": "normal"
+    }
+  ]
+}

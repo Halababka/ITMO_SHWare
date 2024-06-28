@@ -1,0 +1,212 @@
+{
+  "resolvedId": "virtual:nuxt:E:/Stusy/web-client/.nuxt/routes.mjs",
+  "transforms": [
+    {
+      "name": "virtual",
+      "result": "import { default as indexJSGrX29OWeMeta } from \"E:/Stusy/web-client/pages/admin/groups/index.vue?macro=true\";\nimport { default as index4G0T8YOJzkMeta } from \"E:/Stusy/web-client/pages/admin/index.vue?macro=true\";\nimport { default as index6AhN0aih0EMeta } from \"E:/Stusy/web-client/pages/admin/users/index.vue?macro=true\";\nimport { default as adminsybWyVyvauBMeta } from \"E:/Stusy/web-client/pages/admins.vue?macro=true\";\nimport { default as controlCoursesidKvVMQRoMeta } from \"E:/Stusy/web-client/pages/controlCourse.vue?macro=true\";\nimport { default as _91id_93438hUW4BUCMeta } from \"E:/Stusy/web-client/pages/course/[id].vue?macro=true\";\nimport { default as createMEsYsYwuMjMeta } from \"E:/Stusy/web-client/pages/course/create.vue?macro=true\";\nimport { default as indexOGzcvNaLOpMeta } from \"E:/Stusy/web-client/pages/course/index.vue?macro=true\";\nimport { default as coursessg5AsQSNuGMeta } from \"E:/Stusy/web-client/pages/courses.vue?macro=true\";\nimport { default as createCoursepf8CaxAPv0Meta } from \"E:/Stusy/web-client/pages/createCourse.vue?macro=true\";\nimport { default as createMaterialdjPIKLJz7BMeta } from \"E:/Stusy/web-client/pages/createMaterial.vue?macro=true\";\nimport { default as homecGDr6ISyYKMeta } from \"E:/Stusy/web-client/pages/home.vue?macro=true\";\nimport { default as indexbkNt1H4q08Meta } from \"E:/Stusy/web-client/pages/index.vue?macro=true\";\nimport { default as _91_91id_93_93Qd1s0kVHzDMeta } from \"E:/Stusy/web-client/pages/materials/edit/[[id]].vue?macro=true\";\nimport { default as indexRjLPzPiTNWMeta } from \"E:/Stusy/web-client/pages/notifications/index.vue?macro=true\";\nimport { default as profileGUkQskRkIKMeta } from \"E:/Stusy/web-client/pages/profile.vue?macro=true\";\nimport { default as tickets59iefh5wgzMeta } from \"E:/Stusy/web-client/pages/tickets.vue?macro=true\";\nexport default [\n  {\n    name: indexJSGrX29OWeMeta?.name ?? \"admin-groups\",\n    path: indexJSGrX29OWeMeta?.path ?? \"/admin/groups\",\n    meta: indexJSGrX29OWeMeta || {},\n    alias: indexJSGrX29OWeMeta?.alias || [],\n    redirect: indexJSGrX29OWeMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/admin/groups/index.vue\").then(m => m.default || m)\n  },\n  {\n    name: index4G0T8YOJzkMeta?.name ?? \"admin\",\n    path: index4G0T8YOJzkMeta?.path ?? \"/admin\",\n    meta: index4G0T8YOJzkMeta || {},\n    alias: index4G0T8YOJzkMeta?.alias || [],\n    redirect: index4G0T8YOJzkMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/admin/index.vue\").then(m => m.default || m)\n  },\n  {\n    name: index6AhN0aih0EMeta?.name ?? \"admin-users\",\n    path: index6AhN0aih0EMeta?.path ?? \"/admin/users\",\n    meta: index6AhN0aih0EMeta || {},\n    alias: index6AhN0aih0EMeta?.alias || [],\n    redirect: index6AhN0aih0EMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/admin/users/index.vue\").then(m => m.default || m)\n  },\n  {\n    name: adminsybWyVyvauBMeta?.name ?? \"admins\",\n    path: adminsybWyVyvauBMeta?.path ?? \"/admins\",\n    meta: adminsybWyVyvauBMeta || {},\n    alias: adminsybWyVyvauBMeta?.alias || [],\n    redirect: adminsybWyVyvauBMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/admins.vue\").then(m => m.default || m)\n  },\n  {\n    name: controlCoursesidKvVMQRoMeta?.name ?? \"controlCourse\",\n    path: controlCoursesidKvVMQRoMeta?.path ?? \"/controlCourse\",\n    meta: controlCoursesidKvVMQRoMeta || {},\n    alias: controlCoursesidKvVMQRoMeta?.alias || [],\n    redirect: controlCoursesidKvVMQRoMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/controlCourse.vue\").then(m => m.default || m)\n  },\n  {\n    name: _91id_93438hUW4BUCMeta?.name ?? \"course-id\",\n    path: _91id_93438hUW4BUCMeta?.path ?? \"/course/:id()\",\n    meta: _91id_93438hUW4BUCMeta || {},\n    alias: _91id_93438hUW4BUCMeta?.alias || [],\n    redirect: _91id_93438hUW4BUCMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/course/[id].vue\").then(m => m.default || m)\n  },\n  {\n    name: createMEsYsYwuMjMeta?.name ?? \"course-create\",\n    path: createMEsYsYwuMjMeta?.path ?? \"/course/create\",\n    meta: createMEsYsYwuMjMeta || {},\n    alias: createMEsYsYwuMjMeta?.alias || [],\n    redirect: createMEsYsYwuMjMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/course/create.vue\").then(m => m.default || m)\n  },\n  {\n    name: indexOGzcvNaLOpMeta?.name ?? \"course\",\n    path: indexOGzcvNaLOpMeta?.path ?? \"/course\",\n    meta: indexOGzcvNaLOpMeta || {},\n    alias: indexOGzcvNaLOpMeta?.alias || [],\n    redirect: indexOGzcvNaLOpMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/course/index.vue\").then(m => m.default || m)\n  },\n  {\n    name: coursessg5AsQSNuGMeta?.name ?? \"courses\",\n    path: coursessg5AsQSNuGMeta?.path ?? \"/courses\",\n    meta: coursessg5AsQSNuGMeta || {},\n    alias: coursessg5AsQSNuGMeta?.alias || [],\n    redirect: coursessg5AsQSNuGMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/courses.vue\").then(m => m.default || m)\n  },\n  {\n    name: createCoursepf8CaxAPv0Meta?.name ?? \"createCourse\",\n    path: createCoursepf8CaxAPv0Meta?.path ?? \"/createCourse\",\n    meta: createCoursepf8CaxAPv0Meta || {},\n    alias: createCoursepf8CaxAPv0Meta?.alias || [],\n    redirect: createCoursepf8CaxAPv0Meta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/createCourse.vue\").then(m => m.default || m)\n  },\n  {\n    name: createMaterialdjPIKLJz7BMeta?.name ?? \"createMaterial\",\n    path: createMaterialdjPIKLJz7BMeta?.path ?? \"/createMaterial\",\n    meta: createMaterialdjPIKLJz7BMeta || {},\n    alias: createMaterialdjPIKLJz7BMeta?.alias || [],\n    redirect: createMaterialdjPIKLJz7BMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/createMaterial.vue\").then(m => m.default || m)\n  },\n  {\n    name: homecGDr6ISyYKMeta?.name ?? \"home\",\n    path: homecGDr6ISyYKMeta?.path ?? \"/home\",\n    meta: homecGDr6ISyYKMeta || {},\n    alias: homecGDr6ISyYKMeta?.alias || [],\n    redirect: homecGDr6ISyYKMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/home.vue\").then(m => m.default || m)\n  },\n  {\n    name: indexbkNt1H4q08Meta?.name ?? \"index\",\n    path: indexbkNt1H4q08Meta?.path ?? \"/\",\n    meta: indexbkNt1H4q08Meta || {},\n    alias: indexbkNt1H4q08Meta?.alias || [],\n    redirect: indexbkNt1H4q08Meta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/index.vue\").then(m => m.default || m)\n  },\n  {\n    name: _91_91id_93_93Qd1s0kVHzDMeta?.name ?? \"materials-edit-id\",\n    path: _91_91id_93_93Qd1s0kVHzDMeta?.path ?? \"/materials/edit/:id?\",\n    meta: _91_91id_93_93Qd1s0kVHzDMeta || {},\n    alias: _91_91id_93_93Qd1s0kVHzDMeta?.alias || [],\n    redirect: _91_91id_93_93Qd1s0kVHzDMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/materials/edit/[[id]].vue\").then(m => m.default || m)\n  },\n  {\n    name: indexRjLPzPiTNWMeta?.name ?? \"notifications\",\n    path: indexRjLPzPiTNWMeta?.path ?? \"/notifications\",\n    meta: indexRjLPzPiTNWMeta || {},\n    alias: indexRjLPzPiTNWMeta?.alias || [],\n    redirect: indexRjLPzPiTNWMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/notifications/index.vue\").then(m => m.default || m)\n  },\n  {\n    name: profileGUkQskRkIKMeta?.name ?? \"profile\",\n    path: profileGUkQskRkIKMeta?.path ?? \"/profile\",\n    meta: profileGUkQskRkIKMeta || {},\n    alias: profileGUkQskRkIKMeta?.alias || [],\n    redirect: profileGUkQskRkIKMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/profile.vue\").then(m => m.default || m)\n  },\n  {\n    name: tickets59iefh5wgzMeta?.name ?? \"tickets\",\n    path: tickets59iefh5wgzMeta?.path ?? \"/tickets\",\n    meta: tickets59iefh5wgzMeta || {},\n    alias: tickets59iefh5wgzMeta?.alias || [],\n    redirect: tickets59iefh5wgzMeta?.redirect,\n    component: () => import(\"E:/Stusy/web-client/pages/tickets.vue\").then(m => m.default || m)\n  }\n]",
+      "start": 1715794729300,
+      "end": 1715794729300,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794729300,
+      "end": 1715794729300,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794729300,
+      "end": 1715794729300,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794729300,
+      "end": 1715794729300,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794729300,
+      "end": 1715794729300,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794729300,
+      "end": 1715794729300,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794729300,
+      "end": 1715794729300,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794729301,
+      "end": 1715794729301,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1715794729301,
+      "end": 1715794729301,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794729301,
+      "end": 1715794729301,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794729301,
+      "end": 1715794729301,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794729301,
+      "end": 1715794729301,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794729301,
+      "end": 1715794729301,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794729301,
+      "end": 1715794729301,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794729301,
+      "end": 1715794729301,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794729301,
+      "end": 1715794729301,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794729302,
+      "end": 1715794729302,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794729303,
+      "end": 1715794729303,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794729303,
+      "end": 1715794729303,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794729303,
+      "end": 1715794729303,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794729303,
+      "end": 1715794729303,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794729303,
+      "end": 1715794729303,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794729303,
+      "end": 1715794729304,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794729304,
+      "end": 1715794729304,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794729304,
+      "end": 1715794729304,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794729304,
+      "end": 1715794729311,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794729311,
+      "end": 1715794729311,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794729311,
+      "end": 1715794729311,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794729311,
+      "end": 1715794729311,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794729312,
+      "end": 1715794729312,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794729312,
+      "end": 1715794729312,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794729312,
+      "end": 1715794729312,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "result": "import { __vitePreload } from \"\u0000vite/preload-helper.js\";import { default as indexJSGrX29OWeMeta } from \"E:/Stusy/web-client/pages/admin/groups/index.vue?macro=true\";\nimport { default as index4G0T8YOJzkMeta } from \"E:/Stusy/web-client/pages/admin/index.vue?macro=true\";\nimport { default as index6AhN0aih0EMeta } from \"E:/Stusy/web-client/pages/admin/users/index.vue?macro=true\";\nimport { default as adminsybWyVyvauBMeta } from \"E:/Stusy/web-client/pages/admins.vue?macro=true\";\nimport { default as controlCoursesidKvVMQRoMeta } from \"E:/Stusy/web-client/pages/controlCourse.vue?macro=true\";\nimport { default as _91id_93438hUW4BUCMeta } from \"E:/Stusy/web-client/pages/course/[id].vue?macro=true\";\nimport { default as createMEsYsYwuMjMeta } from \"E:/Stusy/web-client/pages/course/create.vue?macro=true\";\nimport { default as indexOGzcvNaLOpMeta } from \"E:/Stusy/web-client/pages/course/index.vue?macro=true\";\nimport { default as coursessg5AsQSNuGMeta } from \"E:/Stusy/web-client/pages/courses.vue?macro=true\";\nimport { default as createCoursepf8CaxAPv0Meta } from \"E:/Stusy/web-client/pages/createCourse.vue?macro=true\";\nimport { default as createMaterialdjPIKLJz7BMeta } from \"E:/Stusy/web-client/pages/createMaterial.vue?macro=true\";\nimport { default as homecGDr6ISyYKMeta } from \"E:/Stusy/web-client/pages/home.vue?macro=true\";\nimport { default as indexbkNt1H4q08Meta } from \"E:/Stusy/web-client/pages/index.vue?macro=true\";\nimport { default as _91_91id_93_93Qd1s0kVHzDMeta } from \"E:/Stusy/web-client/pages/materials/edit/[[id]].vue?macro=true\";\nimport { default as indexRjLPzPiTNWMeta } from \"E:/Stusy/web-client/pages/notifications/index.vue?macro=true\";\nimport { default as profileGUkQskRkIKMeta } from \"E:/Stusy/web-client/pages/profile.vue?macro=true\";\nimport { default as tickets59iefh5wgzMeta } from \"E:/Stusy/web-client/pages/tickets.vue?macro=true\";\nexport default [\n  {\n    name: indexJSGrX29OWeMeta?.name ?? \"admin-groups\",\n    path: indexJSGrX29OWeMeta?.path ?? \"/admin/groups\",\n    meta: indexJSGrX29OWeMeta || {},\n    alias: indexJSGrX29OWeMeta?.alias || [],\n    redirect: indexJSGrX29OWeMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/admin/groups/index.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: index4G0T8YOJzkMeta?.name ?? \"admin\",\n    path: index4G0T8YOJzkMeta?.path ?? \"/admin\",\n    meta: index4G0T8YOJzkMeta || {},\n    alias: index4G0T8YOJzkMeta?.alias || [],\n    redirect: index4G0T8YOJzkMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/admin/index.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: index6AhN0aih0EMeta?.name ?? \"admin-users\",\n    path: index6AhN0aih0EMeta?.path ?? \"/admin/users\",\n    meta: index6AhN0aih0EMeta || {},\n    alias: index6AhN0aih0EMeta?.alias || [],\n    redirect: index6AhN0aih0EMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/admin/users/index.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: adminsybWyVyvauBMeta?.name ?? \"admins\",\n    path: adminsybWyVyvauBMeta?.path ?? \"/admins\",\n    meta: adminsybWyVyvauBMeta || {},\n    alias: adminsybWyVyvauBMeta?.alias || [],\n    redirect: adminsybWyVyvauBMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/admins.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: controlCoursesidKvVMQRoMeta?.name ?? \"controlCourse\",\n    path: controlCoursesidKvVMQRoMeta?.path ?? \"/controlCourse\",\n    meta: controlCoursesidKvVMQRoMeta || {},\n    alias: controlCoursesidKvVMQRoMeta?.alias || [],\n    redirect: controlCoursesidKvVMQRoMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/controlCourse.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: _91id_93438hUW4BUCMeta?.name ?? \"course-id\",\n    path: _91id_93438hUW4BUCMeta?.path ?? \"/course/:id()\",\n    meta: _91id_93438hUW4BUCMeta || {},\n    alias: _91id_93438hUW4BUCMeta?.alias || [],\n    redirect: _91id_93438hUW4BUCMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/course/[id].vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: createMEsYsYwuMjMeta?.name ?? \"course-create\",\n    path: createMEsYsYwuMjMeta?.path ?? \"/course/create\",\n    meta: createMEsYsYwuMjMeta || {},\n    alias: createMEsYsYwuMjMeta?.alias || [],\n    redirect: createMEsYsYwuMjMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/course/create.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: indexOGzcvNaLOpMeta?.name ?? \"course\",\n    path: indexOGzcvNaLOpMeta?.path ?? \"/course\",\n    meta: indexOGzcvNaLOpMeta || {},\n    alias: indexOGzcvNaLOpMeta?.alias || [],\n    redirect: indexOGzcvNaLOpMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/course/index.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: coursessg5AsQSNuGMeta?.name ?? \"courses\",\n    path: coursessg5AsQSNuGMeta?.path ?? \"/courses\",\n    meta: coursessg5AsQSNuGMeta || {},\n    alias: coursessg5AsQSNuGMeta?.alias || [],\n    redirect: coursessg5AsQSNuGMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/courses.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: createCoursepf8CaxAPv0Meta?.name ?? \"createCourse\",\n    path: createCoursepf8CaxAPv0Meta?.path ?? \"/createCourse\",\n    meta: createCoursepf8CaxAPv0Meta || {},\n    alias: createCoursepf8CaxAPv0Meta?.alias || [],\n    redirect: createCoursepf8CaxAPv0Meta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/createCourse.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: createMaterialdjPIKLJz7BMeta?.name ?? \"createMaterial\",\n    path: createMaterialdjPIKLJz7BMeta?.path ?? \"/createMaterial\",\n    meta: createMaterialdjPIKLJz7BMeta || {},\n    alias: createMaterialdjPIKLJz7BMeta?.alias || [],\n    redirect: createMaterialdjPIKLJz7BMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/createMaterial.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: homecGDr6ISyYKMeta?.name ?? \"home\",\n    path: homecGDr6ISyYKMeta?.path ?? \"/home\",\n    meta: homecGDr6ISyYKMeta || {},\n    alias: homecGDr6ISyYKMeta?.alias || [],\n    redirect: homecGDr6ISyYKMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/home.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: indexbkNt1H4q08Meta?.name ?? \"index\",\n    path: indexbkNt1H4q08Meta?.path ?? \"/\",\n    meta: indexbkNt1H4q08Meta || {},\n    alias: indexbkNt1H4q08Meta?.alias || [],\n    redirect: indexbkNt1H4q08Meta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/index.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: _91_91id_93_93Qd1s0kVHzDMeta?.name ?? \"materials-edit-id\",\n    path: _91_91id_93_93Qd1s0kVHzDMeta?.path ?? \"/materials/edit/:id?\",\n    meta: _91_91id_93_93Qd1s0kVHzDMeta || {},\n    alias: _91_91id_93_93Qd1s0kVHzDMeta?.alias || [],\n    redirect: _91_91id_93_93Qd1s0kVHzDMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/materials/edit/[[id]].vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: indexRjLPzPiTNWMeta?.name ?? \"notifications\",\n    path: indexRjLPzPiTNWMeta?.path ?? \"/notifications\",\n    meta: indexRjLPzPiTNWMeta || {},\n    alias: indexRjLPzPiTNWMeta?.alias || [],\n    redirect: indexRjLPzPiTNWMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/notifications/index.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: profileGUkQskRkIKMeta?.name ?? \"profile\",\n    path: profileGUkQskRkIKMeta?.path ?? \"/profile\",\n    meta: profileGUkQskRkIKMeta || {},\n    alias: profileGUkQskRkIKMeta?.alias || [],\n    redirect: profileGUkQskRkIKMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/profile.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  },\n  {\n    name: tickets59iefh5wgzMeta?.name ?? \"tickets\",\n    path: tickets59iefh5wgzMeta?.path ?? \"/tickets\",\n    meta: tickets59iefh5wgzMeta || {},\n    alias: tickets59iefh5wgzMeta?.alias || [],\n    redirect: tickets59iefh5wgzMeta?.redirect,\n    component: () => __vitePreload(() => import(\"E:/Stusy/web-client/pages/tickets.vue\"),__VITE_IS_MODERN__?\"__VITE_PRELOAD__\":void 0,import.meta.url).then(m => m.default || m)\n  }\n]",
+      "start": 1715794729312,
+      "end": 1715794729313,
+      "order": "normal",
+      "sourcemaps": null
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794729314,
+      "end": 1715794729314,
+      "order": "normal"
+    }
+  ]
+}

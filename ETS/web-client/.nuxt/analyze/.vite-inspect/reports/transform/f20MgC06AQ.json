@@ -1,0 +1,214 @@
+{
+  "resolvedId": "E:/Stusy/web-client/components/widgets/WeatherWidget.vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\nimport {computed} from \"vue\";\r\n\r\ninterface WeatherCodes {\r\n  [code: string]: string;\r\n}\r\n\r\ninterface WeatherSymbols {\r\n  [description: string]: string;\r\n}\r\n\r\ninterface WeatherData {\r\n  weather: number;\r\n  weatherText: string;\r\n  lastLessonWeather: number;\r\n  weatherCode: string;\r\n  weatherStatus: string;\r\n  fetchDate: number;\r\n}\r\n\r\ninterface WeatherError {\r\n  errorText: string;\r\n}\r\n\r\nconst weatherCodes: WeatherCodes = {\r\n  \"0\": \"Unknown\",\r\n  \"113\": \"Sunny\",\r\n  \"116\": \"PartlyCloudy\",\r\n  \"119\": \"Cloudy\",\r\n  \"122\": \"VeryCloudy\",\r\n  \"143\": \"Fog\",\r\n  \"176\": \"LightShowers\",\r\n  \"179\": \"LightSleetShowers\",\r\n  \"182\": \"LightSleet\",\r\n  \"185\": \"LightSleet\",\r\n  \"200\": \"ThunderyShowers\",\r\n  \"227\": \"LightSnow\",\r\n  \"230\": \"HeavySnow\",\r\n  \"248\": \"Fog\",\r\n  \"260\": \"Fog\",\r\n  \"263\": \"LightShowers\",\r\n  \"266\": \"LightRain\",\r\n  \"281\": \"LightSleet\",\r\n  \"284\": \"LightSleet\",\r\n  \"293\": \"LightRain\",\r\n  \"296\": \"LightRain\",\r\n  \"299\": \"HeavyShowers\",\r\n  \"302\": \"HeavyRain\",\r\n  \"305\": \"HeavyShowers\",\r\n  \"308\": \"HeavyRain\",\r\n  \"311\": \"LightSleet\",\r\n  \"314\": \"LightSleet\",\r\n  \"317\": \"LightSleet\",\r\n  \"320\": \"LightSnow\",\r\n  \"323\": \"LightSnowShowers\",\r\n  \"326\": \"LightSnowShowers\",\r\n  \"329\": \"HeavySnow\",\r\n  \"332\": \"HeavySnow\",\r\n  \"335\": \"HeavySnowShowers\",\r\n  \"338\": \"HeavySnow\",\r\n  \"350\": \"LightSleet\",\r\n  \"353\": \"LightShowers\",\r\n  \"356\": \"HeavyShowers\",\r\n  \"359\": \"HeavyRain\",\r\n  \"362\": \"LightSleetShowers\",\r\n  \"365\": \"LightSleetShowers\",\r\n  \"368\": \"LightSnowShowers\",\r\n  \"371\": \"HeavySnowShowers\",\r\n  \"374\": \"LightSleetShowers\",\r\n  \"377\": \"LightSleet\",\r\n  \"386\": \"ThunderyShowers\",\r\n  \"389\": \"ThunderyHeavyRain\",\r\n  \"392\": \"ThunderySnowShowers\",\r\n  \"395\": \"HeavySnowShowers\",\r\n}\r\n\r\nconst weatherSymbols: WeatherSymbols = {\r\n  \"Unknown\": \"✨\",\r\n  \"Cloudy\": \"☁️\",\r\n  \"Fog\": \"🌫\",\r\n  \"HeavyRain\": \"🌧\",\r\n  \"HeavyShowers\": \"🌧\",\r\n  \"HeavySnow\": \"❄️\",\r\n  \"HeavySnowShowers\": \"❄️\",\r\n  \"LightRain\": \"🌦\",\r\n  \"LightShowers\": \"🌦\",\r\n  \"LightSleet\": \"🌧\",\r\n  \"LightSleetShowers\": \"🌧\",\r\n  \"LightSnow\": \"🌨\",\r\n  \"LightSnowShowers\": \"🌨\",\r\n  \"PartlyCloudy\": \"⛅️\",\r\n  \"Sunny\": \"☀️\",\r\n  \"ThunderyHeavyRain\": \"🌩\",\r\n  \"ThunderyShowers\": \"⛈\",\r\n  \"ThunderySnowShowers\": \"⛈\",\r\n  \"VeryCloudy\": \"☁️\",\r\n}\r\n\r\nconst weather: Ref<WeatherData> = ref({\r\n  fetchDate: 0,\r\n  lastLessonWeather: 0,\r\n  weather: 0,\r\n  weatherCode: \"\",\r\n  weatherStatus: \"\",\r\n  weatherText: \"\",\r\n});\r\n\r\nlet lastLessonTime = 1705;\r\n\r\nconst weatherEmoji = computed(() => {\r\n  return weatherSymbols[weatherCodes[weather.value.weatherCode]];\r\n});\r\n\r\nconst nowDay = computed(() => {\r\n  return new Date().toLocaleString(\"ru\", {weekday: \"long\"})[0].toUpperCase() + new Date().toLocaleString(\"ru\", {weekday: \"long\"}).slice(1)\r\n});\r\n\r\nfunction timeIndex(): number {\r\n  let closestTime: number;\r\n  let j = Math.floor(lastLessonTime / 100);\r\n  if (j % 3 > 1) {\r\n    closestTime = j + 1;\r\n  } else {\r\n    closestTime = j - j % 3;\r\n  }\r\n  if (closestTime === 24) {\r\n    closestTime = 0;\r\n  }\r\n  return closestTime / 3;\r\n}\r\n\r\nasync function getTemperature() {\r\n  let storedWeather: WeatherData | null = null;\r\n  if (typeof window !== 'undefined') {\r\n    storedWeather = JSON.parse(<string>localStorage.getItem(\"weather\"));\r\n  }\r\n  if (storedWeather !== null && !isWeatherExpired(storedWeather)) {\r\n    weather.value = storedWeather\r\n  } else {\r\n    console.log('Погода истекла или её нет, получаю новую')\r\n    fetchWeather()\r\n  }\r\n}\r\n\r\nfunction isWeatherExpired(weather: WeatherData): boolean {\r\n  let secondsPassed = 0;\r\n  const hoursExpired = 1;\r\n  const secondsExpired = hoursExpired * 60 * 60;\r\n  const nowSeconds = Date.now() / 1000;\r\n  if (typeof window !== 'undefined') {\r\n    secondsPassed = nowSeconds - weather.fetchDate;\r\n  }\r\n  return secondsPassed > secondsExpired;\r\n}\r\n\r\nfunction fetchWeather() {\r\n  const city = \"Волгодонск\";\r\n  const {\r\n    data,\r\n    pending,\r\n    error,\r\n    refresh\r\n  } = useFetch(`https://wttr.in/${city}?format=j1`, {\r\n        onRequestError({request, options, error}) {\r\n          // Handle the request errors\r\n          console.log(error)\r\n        },\r\n        onResponse({request, response, options}) {\r\n          // Process the response data\r\n          const data = response._data\r\n          const fetchedWeather = {\r\n            fetchDate: Math.round(Date.now() / 1000),\r\n            lastLessonWeather: parseInt(data.weather[0].hourly[timeIndex()].tempC),\r\n            weather: parseInt(data.current_condition[0].temp_C),\r\n            weatherCode: data.weather[0].hourly[timeIndex()][\"weatherCode\"],\r\n            weatherStatus: data.weather[0].hourly[timeIndex()][\"lang_ru\"][0].value.toLowerCase(),\r\n            weatherText: data.current_condition[0].lang_ru[0].value.toLowerCase(),\r\n          }\r\n          localStorage.setItem('weather', JSON.stringify(fetchedWeather))\r\n          weather.value = fetchedWeather\r\n        },\r\n        onResponseError({request, response, options}) {\r\n          // Handle the response errors\r\n          console.log(response)\r\n        }\r\n      }\r\n  )\r\n}\r\n\r\n// fetchWeather()\r\ngetTemperature()\r\n</script>\r\n\r\n<template>\r\n  <div id='weather'>\r\n    <div class=\"top\">\r\n      <p id='dateNowDay'>{{ weather.weather }}&deg;</p>\r\n      <span id='wicon'>\r\n          {{ weatherEmoji }}\r\n        </span>\r\n\r\n    </div>\r\n    <p id='dateNowDay'>{{ nowDay }}, {{ weather.weatherText }}</p>\r\n    <p>К концу занятий {{ weather.lastLessonWeather }}°,\r\n      {{ weather.weatherStatus }}</p>\r\n  </div>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n.lds-ripple {\r\n  align-self: center;\r\n}\r\n\r\n#weather {\r\n  min-height: 220px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\r\n  gap: 5px;\r\n\r\n  flex-wrap: nowrap;\r\n}\r\n\r\n#weather p, #weather h1 {\r\n  font-size: 24px;\r\n  margin: 0;\r\n}\r\n\r\n#weather #wicon {\r\n  font-size: 85pt;\r\n  user-select: none;\r\n  font-family: 'Noto Color Emoji', sans-serif;\r\n}\r\n\r\n#weather .top {\r\n  display: flex;\r\n  align-items: flex-end;\r\n  justify-content: space-between;\r\n  height: 120px;\r\n}\r\n\r\n.top #dateNowDay {\r\n  font-size: 36pt !important;\r\n}\r\n</style>",
+      "start": 1715794737112,
+      "end": 1715794737531,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794737531,
+      "end": 1715794737531,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794737531,
+      "end": 1715794737531,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794737531,
+      "end": 1715794737531,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794737531,
+      "end": 1715794737531,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794737531,
+      "end": 1715794737531,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794737531,
+      "end": 1715794737531,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794737531,
+      "end": 1715794737531,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/components/widgets/WeatherWidget.vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/components/widgets/WeatherWidget.vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/components/widgets/WeatherWidget.vue?vue&type=style&index=0&scoped=4dc597f8&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-4dc597f8\"]]);\n",
+      "start": 1715794737531,
+      "end": 1715794737995,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794737995,
+      "end": 1715794737995,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794737995,
+      "end": 1715794737995,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794737996,
+      "end": 1715794737996,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794737996,
+      "end": 1715794737996,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794738001,
+      "end": 1715794738001,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794738002,
+      "end": 1715794738002,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794738002,
+      "end": 1715794738002,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794738002,
+      "end": 1715794738002,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794738002,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794738003,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794738003,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794738003,
+      "end": 1715794738003,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794738004,
+      "end": 1715794738004,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794738004,
+      "end": 1715794738006,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794738006,
+      "end": 1715794738007,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794738007,
+      "end": 1715794738007,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794738007,
+      "end": 1715794738007,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794738008,
+      "end": 1715794738008,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794738008,
+      "end": 1715794738008,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794738008,
+      "end": 1715794738008,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794738008,
+      "end": 1715794738009,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794738009,
+      "end": 1715794738009,
+      "order": "normal"
+    }
+  ]
+}

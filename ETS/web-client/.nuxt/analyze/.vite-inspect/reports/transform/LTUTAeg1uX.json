@@ -1,0 +1,212 @@
+{
+  "resolvedId": "E:/Stusy/web-client/composables/mobile.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { useState } from \"#app\";\r\n\r\nexport const useMobile = () => {\r\n    return useState('mobile', () => false)\r\n}\r\n\r\nexport const useMenu = () => {\r\n    return useState('menuActive', () => false)\r\n}\r\n\r\nexport const handleMobile = async (force = null) => {\r\n    let mobile = useMobile()\r\n    console.log(\"Force mobile\", force)\r\n    if (process.client) {\r\n        if (force !== null) {\r\n            mobile.value = force\r\n        } else {\r\n            mobile.value = !mobile.value\r\n        }\r\n    }\r\n\r\n    return mobile\r\n}\r\n\r\nexport const handleMenu = async (force = null) => {\r\n    let menuActive = useMenu()\r\n    console.log(\"Force menu\", force)\r\n    if (process.client) {\r\n        if (force !== null) {\r\n            menuActive.value = force\r\n        } else {\r\n            menuActive.value = !menuActive.value\r\n        }\r\n    }\r\n\r\n    return menuActive\r\n}",
+      "start": 1715794738633,
+      "end": 1715794739847,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794739847,
+      "end": 1715794739847,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "result": "import { useState } from \"#app\";\nexport const useMobile = () => {\n  return useState(\"mobile\", () => false);\n};\nexport const useMenu = () => {\n  return useState(\"menuActive\", () => false);\n};\nexport const handleMobile = async (force = null) => {\n  let mobile = useMobile();\n  console.log(\"Force mobile\", force);\n  if (true) {\n    if (force !== null) {\n      mobile.value = force;\n    } else {\n      mobile.value = !mobile.value;\n    }\n  }\n  return mobile;\n};\nexport const handleMenu = async (force = null) => {\n  let menuActive = useMenu();\n  console.log(\"Force menu\", force);\n  if (true) {\n    if (force !== null) {\n      menuActive.value = force;\n    } else {\n      menuActive.value = !menuActive.value;\n    }\n  }\n  return menuActive;\n};\n",
+      "start": 1715794739847,
+      "end": 1715794739882,
+      "order": "normal",
+      "sourcemaps": null
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794739882,
+      "end": 1715794739882,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794739882,
+      "end": 1715794739883,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794739883,
+      "end": 1715794739884,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794739884,
+      "end": 1715794739884,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794739884,
+      "end": 1715794739885,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794739885,
+      "end": 1715794739885,
+      "order": "normal"
+    }
+  ]
+}

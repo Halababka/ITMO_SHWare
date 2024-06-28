@@ -1,0 +1,214 @@
+{
+  "resolvedId": "E:/Stusy/web-client/pages/materials/edit/[[id]].vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup lang=\"ts\">\r\ndefinePageMeta({layout: 'home'})\r\nuseHead({\r\n  title: 'Контент'\r\n})\r\n\r\nconst runtimeConfig = useRuntimeConfig();\r\nconst router = useRouter();\r\nconst materialId = ref(null);\r\nconst isEditing = ref(false);\r\nconst token = useCookie('token').value;\r\n\r\nconst courseInfo = useEditingCourse();\r\nconst targetSectionIndex = ref(null)\r\nconst formData = ref({\r\n  title: '',\r\n  content: '',\r\n  contentType: '', // по умолчанию тип контента - текст\r\n  textContent: '', // содержимое текстового контента\r\n  // дополнительные поля для других типов контента\r\n});\r\nlet response;\r\n\r\nonMounted(() => {\r\n  const routeParams = router.currentRoute.value.params;\r\n  materialId.value = routeParams.id;\r\n  formData.value.contentType = router.currentRoute.value.query.contentType\r\n  targetSectionIndex.value = router.currentRoute.value.query.section\r\n\r\n  if (materialId.value) {\r\n    isEditing.value = true;\r\n    // Здесь можно загрузить данные существующего материала для редактирования\r\n    // fetch(`/api/materials/${materialId.value}`).then(response => {\r\n    //   if (response.ok) {\r\n    //     return response.json();\r\n    //   } else {\r\n    //     throw new Error('Ошибка при загрузке материала');\r\n    //   }\r\n    // }).then(data => {\r\n    //   formData.title = data.title;\r\n    //   formData.content = data.content;\r\n    // }).catch(error => {\r\n    //   console.error(error);\r\n    //   alert('Произошла ошибка при загрузке материала');\r\n    // });\r\n  }\r\n});\r\n\r\nconst submitForm = () => {\r\n  if (isEditing.value) {\r\n    // Логика обновления материала\r\n    // После успешного обновления материала\r\n    router.push('/course/create');\r\n  } else {\r\n    // Логика создания нового материала\r\n\r\n    // Определяем тип контента, который нужно добавить\r\n    const contentType = formData.value.contentType;\r\n\r\n    // Создаем объект контента в зависимости от типа\r\n    let content;\r\n    switch (contentType) {\r\n      case 'text':\r\n        content = {\r\n          title: formData.value.title,\r\n          content: formData.value.content,\r\n          type: 'text'\r\n        };\r\n        break;\r\n      case 'file':\r\n        content = {\r\n          title: formData.value.title,\r\n          content: formData.value.content,\r\n          type: 'file',\r\n          materials: [{name: response.files[0].name, path: response.files[0].path}]\r\n        };\r\n        break;\r\n      default:\r\n        console.error('Неизвестный тип контента');\r\n    }\r\n\r\n    // Добавляем контент в соответствующую секцию\r\n    courseInfo.value.sections[targetSectionIndex.value].contents.push(content);\r\n\r\n    console.log(courseInfo)\r\n\r\n    // После успешного создания материала\r\n    router.push('/course/create');\r\n  }\r\n};\r\n\r\nconst $primevue = usePrimeVue();\r\nconst toast = useToast();\r\n\r\nconst totalSize = ref(0);\r\nconst totalSizePercent = ref(0);\r\nconst files = ref([]);\r\n\r\nconst onRemoveTemplatingFile = (file, removeFileCallback, index) => {\r\n  removeFileCallback(index);\r\n  totalSize.value -= parseInt(formatSize(file.size));\r\n  totalSizePercent.value = totalSize.value / 10;\r\n};\r\n\r\nconst onClearTemplatingUpload = (clear) => {\r\n  clear();\r\n  totalSize.value = 0;\r\n  totalSizePercent.value = 0;\r\n};\r\n\r\nconst onSelectedFiles = (event) => {\r\n  files.value = event.files;\r\n  files.value.forEach((file) => {\r\n    totalSize.value += parseInt(formatSize(file.size));\r\n  });\r\n};\r\n\r\nconst uploadEvent = (callback) => {\r\n  totalSizePercent.value = totalSize.value / 10;\r\n  callback();\r\n};\r\n\r\nconst onTemplatedUpload = (event) => {\r\n  response = JSON.parse(event.xhr.response);\r\n  console.log(response.files)\r\n  toast.add({severity: \"info\", summary: \"Success\", detail: \"Файл загружен\", life: 3000});\r\n};\r\nconst formatSize = (bytes) => {\r\n  const k = 1024;\r\n  const dm = 3;\r\n  const sizes = $primevue.config.locale.fileSizeTypes;\r\n\r\n  if (bytes === 0) {\r\n    return `0 ${sizes[0]}`;\r\n  }\r\n\r\n  const i = Math.floor(Math.log(bytes) / Math.log(k));\r\n  const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));\r\n\r\n  return `${formattedSize} ${sizes[i]}`;\r\n};\r\nconst onBeforeSend = (event) => {\r\n  const xhr = event.xhr;\r\n  xhr.setRequestHeader('Authorization', token);\r\n};\r\n</script>\r\n\r\n<template>\r\n  <div class=\"main-content\">\r\n    <Toast/>\r\n    <div class=\"container mx-auto\">\r\n      <h1 class=\"text-2xl font-semibold mb-4\">{{ isEditing ? 'Редактирование' : 'Создание' }} материала</h1>\r\n      <form @submit.prevent=\"submitForm\">\r\n        <div class=\"mb-4\">\r\n          <label for=\"title\" class=\"block font-semibold\">Название</label>\r\n          <InputText v-model.trim=\"formData.title\" type=\"text\" id=\"title\" class=\"mt-1 p-2 w-full\" required/>\r\n        </div>\r\n        <div class=\"mb-4\">\r\n          <label for=\"content\" class=\"block font-semibold\">Описание</label>\r\n          <Textarea v-model.trim=\"formData.content\" id=\"content\" class=\"mt-1 p-2 border rounded w-full\" rows=\"4\"\r\n                    variant=\"filled\"/>\r\n        </div>\r\n<!--        <div class=\"mb-4\">-->\r\n<!--          <label for=\"file-content\" class=\"block font-semibold\">Файл:</label>-->\r\n<!--          <input type=\"file\" id=\"file-content\" class=\"mt-1 p-2 border rounded w-full\" @change=\"handleFileUpload\">-->\r\n<!--        </div>-->\r\n\r\n        <div v-if=\"formData.contentType === 'text'\" class=\"mb-4\">\r\n          <!-- Поля для текстового контента -->\r\n        </div>\r\n        <div v-if=\"formData.contentType === 'file'\" class=\"mb-4\">\r\n          <!-- Поля для файла -->\r\n          <div class=\"card mb-4\">\r\n            <label class=\"block font-semibold\">Файл</label>\r\n            <FileUpload name=\"files\" :url=\"`${runtimeConfig.public.apiBase}/files/upload`\" @upload=\"onTemplatedUpload($event)\"\r\n                        @select=\"onSelectedFiles\" :auto=\"true\" @before-send=\"onBeforeSend($event)\">\r\n              <template #header=\"{ chooseCallback, uploadCallback, clearCallback, files }\">\r\n                <div class=\"flex justify-between items-center flex-1 gap-2\">\r\n                  <div class=\"flex gap-2\">\r\n                    <Button @click=\"chooseCallback()\" icon=\"pi pi-file\"\r\n                            class=\"p-button-rounded p-button-outlined\"></Button>\r\n                    <Button @click=\"uploadEvent(uploadCallback)\" icon=\"pi pi-cloud-upload\"\r\n                            class=\"p-button-rounded p-button-outlined p-button-success\"\r\n                            :disabled=\"!files || files.length === 0\"></Button>\r\n                    <Button @click=\"clearCallback()\" icon=\"pi pi-times\"\r\n                            class=\"p-button-rounded p-button-outlined p-button-danger\"\r\n                            :disabled=\"!files || files.length === 0\"></Button>\r\n                  </div>\r\n                  <ProgressBar :value=\"totalSizePercent\" :showValue=\"false\"\r\n                               :class=\"['md:w-20rem w-full ml-auto', { 'exceeded-progress-bar': totalSizePercent > 100 }]\">\r\n                    <span class=\"whitespace-nowrap\">{{ totalSize }}B / 1Mb</span>\r\n                  </ProgressBar>\r\n                </div>\r\n              </template>\r\n              <template #content=\"{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }\">\r\n                <div v-if=\"files.length > 0\">\r\n                  <h5>Отправка</h5>\r\n                  <div class=\"flex flex-wrap gap-5\">\r\n                    <div v-for=\"(file, index) of files\" :key=\"file.name + file.type + file.size\"\r\n                         class=\"card flex flex-col border surface-border items-center gap-3\">\r\n                      <div>\r\n                        <img role=\"presentation\" :alt=\"file.name\" :src=\"file.objectURL\" width=\"100\" height=\"50\"/>\r\n                      </div>\r\n                      <span class=\"font-semibold\">{{ file.name }}</span>\r\n                      <div>{{ formatSize(file.size) }}</div>\r\n                      <Badge value=\"Отправка\" severity=\"warning\"/>\r\n                      <Button icon=\"pi pi-times\" @click=\"onRemoveTemplatingFile(file, removeFileCallback, index)\"\r\n                              class=\"p-button-outlined p-button-rounded p-button-danger\"/>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n\r\n                <div v-if=\"uploadedFiles.length > 0\">\r\n                  <h5>Завершено</h5>\r\n                  <div class=\"flex flex-wrap gap-5\">\r\n                    <div v-for=\"(file, index) of uploadedFiles\" :key=\"file.name + file.type + file.size\"\r\n                         class=\"card flex flex-col border surface-border items-center gap-3\">\r\n                      <div>\r\n                        <img role=\"presentation\" :alt=\"file.name\" :src=\"file.objectURL\" width=\"100\" height=\"50\"/>\r\n                      </div>\r\n                      <span class=\"font-semibold\">{{ file.name }}</span>\r\n                      <div>{{ formatSize(file.size) }}</div>\r\n                      <Badge value=\"Завершено\" class=\"mt-3\" severity=\"success\"/>\r\n                      <Button icon=\"pi pi-times\" @click=\"removeUploadedFileCallback(index)\"\r\n                              class=\"p-button-outlined p-button-rounded p-button-danger\"/>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </template>\r\n              <template #empty>\r\n                <div class=\"flex items-center justify-center flex-col\">\r\n                  <i class=\"pi pi-cloud-upload border-2 rounded-full p-5 text-8xl border-solid\"/>\r\n                  <p class=\"mt-4 mb-0\">Перетащите файлы сюда для загрузки</p>\r\n                </div>\r\n              </template>\r\n            </FileUpload>\r\n          </div>\r\n        </div>\r\n        <Button type=\"submit\">{{\r\n            isEditing ? 'Сохранить' : 'Создать'\r\n          }}\r\n        </Button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</template>\r\n\r\n<style scoped lang=\"scss\">\r\n@use '@/assets/scss/main.scss' as *;\r\n\r\n.main-content {\r\n  gap: 0 !important;\r\n  border-radius: 20px;\r\n  padding: 20px;\r\n  @include theme('background', $general-background-light);\r\n}\r\n</style>",
+      "start": 1715794731225,
+      "end": 1715794731302,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1715794731303,
+      "end": 1715794731303,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1715794731303,
+      "end": 1715794731303,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1715794731303,
+      "end": 1715794731303,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1715794731303,
+      "end": 1715794731303,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1715794731303,
+      "end": 1715794731303,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1715794731303,
+      "end": 1715794731303,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1715794731303,
+      "end": 1715794731303,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import _sfc_main from \"E:/Stusy/web-client/pages/materials/edit/[[id]].vue?vue&type=script&setup=true&lang.ts\";\nexport * from \"E:/Stusy/web-client/pages/materials/edit/[[id]].vue?vue&type=script&setup=true&lang.ts\";\nimport \"E:/Stusy/web-client/pages/materials/edit/[[id]].vue?vue&type=style&index=0&scoped=0e286106&lang.scss\";\nimport _export_sfc from \"\\0plugin-vue:export-helper\";\nexport default /* @__PURE__ */ _export_sfc(_sfc_main, [[\"__scopeId\", \"data-v-0e286106\"]]);\n",
+      "start": 1715794731303,
+      "end": 1715794731464,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1715794731465,
+      "end": 1715794731465,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731473,
+      "end": 1715794731473,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1715794731474,
+      "end": 1715794731474,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1715794731475,
+      "end": 1715794731476,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1715794731476,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1715794731477,
+      "end": 1715794731477,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1715794731478,
+      "end": 1715794731478,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1715794731478,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1715794731479,
+      "end": 1715794731479,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1715794731480,
+      "end": 1715794731480,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1715794731481,
+      "end": 1715794731481,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1715794731481,
+      "end": 1715794731482,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1715794731482,
+      "end": 1715794731482,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1715794731483,
+      "end": 1715794731491,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1715794731492,
+      "end": 1715794731492,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1715794731495,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1715794731498,
+      "end": 1715794731498,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1715794731499,
+      "end": 1715794731499,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1715794731500,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1715794731501,
+      "end": 1715794731501,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1715794731501,
+      "end": 1715794731503,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1715794731503,
+      "end": 1715794731503,
+      "order": "normal"
+    }
+  ]
+}
